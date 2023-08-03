@@ -75,12 +75,12 @@ methods=[]
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
-    events=[event for event in reader]
-    for collection in collections:
-        print(collection + ":")
-        print(dir(events[0].getCollection(collection)))
-        methods.append(dir(events[0].getCollection(collection)))
-    print("Parameters:")
-    for i in range(len(collections)):
-        if ("getParameters" in methods[i]):
-            print(collections[i])
+    for event in reader:
+        for collection in collections:
+            print(collection + ":")
+            print(dir(event.getCollection(collection)))
+            methods.append(dir(event.getCollection(collection)))
+        print("Parameters:")
+        for i in range(len(collections)):
+            if ("getParameters" in methods[i]):
+                print(collections[i])
