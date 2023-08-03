@@ -79,12 +79,12 @@ for f in fnames:
     #Loop over events
     for event in reader:
         # setting decoder
-        hitsCollection = event.getCollection("SiTracks")
-        encoding = event.getCollection("VBTrackerHits").getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        tracksCollection = event.getCollection("SiTracks")
+        encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
 
         #Get tracks within the collection
-        for track in hitsCollection:
+        for track in tracksCollection:
             #Writing pointers to all the data for the first hit in each track
             hits= [i for i in track.getTrackerHits()]
             x_pos1[0]=hits[0].getPositionVec().X()
