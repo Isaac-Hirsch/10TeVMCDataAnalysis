@@ -41,10 +41,10 @@ tree.Branch("side", side, 'var/D')
 
 #Comment out one of the two fnames definitions to run the other
 #No BIB input files
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
+fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/*100.slcio")
 
 #BIB input files
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
+#fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
 
 # Loop over files
 i = 0 #keep track of which event we are on for readout purposes
@@ -54,26 +54,28 @@ for f in fnames:
 
     #Loop over events
     for event in reader:
-        print(i)
-        if i %100 ==1:
-            print("Reading event ",i)
         # setting decoder
         hitsCollection = event.getCollection("SiTracks")
         encoding = hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
+        print("event")
+        print(dir(event.getCollection("SiTracks")))
 
         #Get hits within the collection
+
         for track in event.getCollection("SiTracks"):
             #Writing pointers to all the data for each hit
-            if i %100 ==1:
-                print("Tracks")
-                dir(track)
-                for hits in track:
-                    print("Hits")
-                    dir(hits)
+            print("Tracks:")
+            print(dir(track))
+            for hits in track.getTracks():
+                print("TracksHits:")
+                print(dir(hits))
+            for hits in track.getTrackerHits():
+                print("Hits:")
+                print(dir(hits))
             #Filling the data from the pointers into the tree
             tree.Fill()
 
 
-output_file = TFile(options.outFile, 'RECREATE')
-tree.Write()
+#output_file = TFile(options.outFile, 'RECREATE')
+#tree.Write()
