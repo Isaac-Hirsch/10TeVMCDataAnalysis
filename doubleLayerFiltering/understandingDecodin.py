@@ -74,7 +74,8 @@ for f in fnames:
             tracksCollection = event.getCollection(collection)
             encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
             decoder = UTIL.BitField64(encoding)
-            tracks =[i for i in event.getCollection("SiTracks")]
+            SiTracks=event.getCollection("SiTracks")
+            tracks =[i for i in SiTracks]
             hits = [i for i in tracks[0]]
             print(collection + ":")
             for hit in hits:
