@@ -17,7 +17,7 @@ parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.roo
 
 tree = TTree("tracks_tree", "tracks_tree")
 
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*100.slcio")
+fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/*100.slcio")
 
 collections=[
     "AllTracks",
@@ -35,8 +35,6 @@ collections=[
     "IBTrackerHitsRelations",
     "IETrackerHits",
     "IETrackerHitsRelations",
-    "InnerTrackerBarrelCollection",
-    "InnerTrackerEndcapCollection",
     "JetOut",
     "LE_LooseSelectedPandoraPFOs",
     "LE_SelectedPandoraPFOs",
@@ -49,8 +47,6 @@ collections=[
     "OBTrackerHitsRelations",
     "OETrackerHits",
     "OETrackerHitsRelations",
-    "OuterTrackerBarrelCollection",
-    "OuterTrackerEndcapCollection",
     "PandoraClusters",
     "PandoraPFOs",
     "PandoraStartVertices",
@@ -65,8 +61,6 @@ collections=[
     "VBTrackerHitsRelations",
     "VETrackerHits",
     "VETrackerHitsRelations",
-    "VertexBarrelCollection",
-    "VertexEndcapCollection",
     "YokeBarrelCollection",
     "YokeEndcapCollection"
     ]
