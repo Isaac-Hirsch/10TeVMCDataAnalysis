@@ -49,8 +49,6 @@ tree.Branch("z1", z_pos1, 'var/D')
 tree.Branch("t1", time1, 'var/D')
 tree.Branch("theta1", theta1, 'var/D')
 tree.Branch("phi1", phi1, 'var/D')
-tree.Branch("barOrEnd1", barOrEnd1, "var/D")
-tree.Branch("location1", location1, "var/D")
 tree.Branch("module1", system1, 'var/D')
 tree.Branch("layer1", layer1, 'var/D')
 tree.Branch("side1", side1, 'var/D')
@@ -61,8 +59,6 @@ tree.Branch("z2", z_pos2, 'var/D')
 tree.Branch("t2", time2, 'var/D')
 tree.Branch("theta2", theta2, 'var/D')
 tree.Branch("phi2", phi2, 'var/D')
-tree.Branch("barOrEnd2", barOrEnd2, "var/D")
-tree.Branch("location2", location2, "var/D")
 tree.Branch("module2", system2, 'var/D')
 tree.Branch("layer2", layer2, 'var/D')
 tree.Branch("side2", side2, 'var/D')
@@ -84,7 +80,7 @@ for f in fnames:
     for event in reader:
         # setting decoder
         hitsCollection = event.getCollection("SiTracks")
-        encoding = event.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        encoding = event.getCollection("VBTrackerHits").getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
 
         #Get tracks within the collection
