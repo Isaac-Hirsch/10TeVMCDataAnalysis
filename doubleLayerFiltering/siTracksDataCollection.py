@@ -24,11 +24,10 @@ z_pos1 = array('d', [0])
 time1 = array ('d', [0])
 theta1 = array('d', [0])
 phi1 = array('d', [0])
-barOrEnd1 = array('d', [0]) #0 if in the barrel, 1 if in the endcap
-location1 = array('d',[0]) #0 in vertex, 1 in inner layer, 2 in outer layer
-system1 = array ('d', [0])
-layer1 = array ('d', [0])
-side1 = array('d', [0])
+cID1=array('i',[0])
+#system1 = array ('d', [0])
+#layer1 = array ('d', [0])
+#side1 = array('d', [0])
 
 x_pos2 = array('d', [0])
 y_pos2 = array('d', [0])
@@ -36,11 +35,10 @@ z_pos2 = array('d', [0])
 time2 = array ('d', [0])
 theta2 = array('d', [0])
 phi2 = array('d', [0])
-barOrEnd2 = array('d', [0]) #0 if in the barrel, 1 if in the endcap
-location2 = array('d',[0]) #0 in vertex, 1 in inner layer, 2 in outer layer
-system2 = array ('d', [0])
-layer2 = array ('d', [0])
-side2 = array('d', [0])
+cID2=array('d',[0])
+#system2 = array ('d', [0])
+#layer2 = array ('d', [0])
+#side2 = array('d', [0])
 
 #Initialzing branches for each layer
 tree.Branch("x1",  x_pos1,  'var/D')
@@ -49,9 +47,11 @@ tree.Branch("z1", z_pos1, 'var/D')
 tree.Branch("t1", time1, 'var/D')
 tree.Branch("theta1", theta1, 'var/D')
 tree.Branch("phi1", phi1, 'var/D')
-tree.Branch("module1", system1, 'var/D')
-tree.Branch("layer1", layer1, 'var/D')
-tree.Branch("side1", side1, 'var/D')
+tree.Branch("cellID1", cID1, 'var/D')
+
+#tree.Branch("module1", system1, 'var/D')
+#tree.Branch("layer1", layer1, 'var/D')
+#tree.Branch("side1", side1, 'var/D')
 
 tree.Branch("x2",  x_pos2,  'var/D')
 tree.Branch("y2",  y_pos2,  'var/D')
@@ -59,13 +59,14 @@ tree.Branch("z2", z_pos2, 'var/D')
 tree.Branch("t2", time2, 'var/D')
 tree.Branch("theta2", theta2, 'var/D')
 tree.Branch("phi2", phi2, 'var/D')
-tree.Branch("module2", system2, 'var/D')
-tree.Branch("layer2", layer2, 'var/D')
-tree.Branch("side2", side2, 'var/D')
+tree.Branch("cellID2", cID2, 'var/D')
+#tree.Branch("module2", system2, 'var/D')
+#tree.Branch("layer2", layer2, 'var/D')
+#tree.Branch("side2", side2, 'var/D')
 
 #Comment out one of the two fnames definitions to run the other
 #No BIB input files
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*100.slcio")
+fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
 
 #BIB input files
 #fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
@@ -97,9 +98,10 @@ for f in fnames:
             #Decoder
             cellID1 = int(hits[0].getCellID0())
             decoder.setValue(cellID1)
-            layer1[0] = decoder['layer'].value()
-            system1[0] = decoder["system"].value()
-            side1[0] = decoder["side"].value()
+            cID1=decoder.getValue()
+            #layer1[0] = decoder['layer'].value()
+            #system1[0] = decoder["system"].value()
+            #side1[0] = decoder["side"].value()
 
             #Second hit
             x_pos2[0]=hits[1].getPositionVec().X()
@@ -112,9 +114,10 @@ for f in fnames:
             #Decoder
             cellID2 = int(hits[1].getCellID0())
             decoder.setValue(cellID2)
-            layer2[0] = decoder['layer'].value()
-            system2[0] = decoder["system"].value()
-            side2[0] = decoder["side"].value()
+            cID2=decoder.getValue()
+            #layer2[0] = decoder['layer'].value()
+            #system2[0] = decoder["system"].value()
+            #side2[0] = decoder["side"].value()
 
             #Filling the data from the pointers into the tree
             tree.Fill()

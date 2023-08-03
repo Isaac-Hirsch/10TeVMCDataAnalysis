@@ -71,10 +71,13 @@ for f in fnames:
     reader.open(f)
     for event in reader:
         for collection in collections:
+            tracksCollection = event.getCollection(collection)
+            encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+            decoder = UTIL.BitField64(encoding)
+            tracks =[i for i in event.getCollection("SiTracks")]
+            hits = [i for i in tracks[0]]
             print(collection + ":")
-            print(dir(event.getCollection(collection)))
-            methods.append(dir(event.getCollection(collection)))
-        print("Parameters:")
-        for i in range(len(collections)):
-            if ("getParameters" in methods[i]):
-                print(collections[i])
+            for hit in hits:
+                cellID = int(hit.getCellID0())
+                decoder.setValue(cellID)
+                print(decoder.valueString())
