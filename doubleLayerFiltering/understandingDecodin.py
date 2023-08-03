@@ -78,8 +78,8 @@ for f in fnames:
     events=[event for event in reader]
     for collection in collections:
         print(collection + ":")
+        print(dir(events[0].getCollection(collection)))
         methods.append(dir(events[0].getCollection(collection)))
-        print(methods[-1])
     print("Parameters:")
     for i in range(len(collections)):
         if ("getParameters" in methods[i]):
