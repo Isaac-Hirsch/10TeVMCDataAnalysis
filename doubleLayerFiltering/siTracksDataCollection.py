@@ -79,13 +79,13 @@ i = 0 #keep track of which event we are on for readout purposes
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
-
+    # setting decoder
+    hitsCollection = event.getCollection("SiTracks")
+    encoding = hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+    decoder = UTIL.BitField64(encoding)
+    
     #Loop over events
     for event in reader:
-        # setting decoder
-        hitsCollection = event.getCollection("SiTracks")
-        encoding = hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
-        decoder = UTIL.BitField64(encoding)
 
         #Get tracks within the collection
         for track in hitsCollection:
