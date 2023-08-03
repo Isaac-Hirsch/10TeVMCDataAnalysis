@@ -90,7 +90,7 @@ for f in fnames:
         #Get tracks within the collection
         for track in hitsCollection:
             #Writing pointers to all the data for the first hit in each track
-            hits= [i in track.getTrackerHits()]
+            hits= [i for i in track.getTrackerHits()]
             x_pos1[0]=hits[0].getPositionVec().X()
             y_pos1[0]=hits[0].getPositionVec().Y()
             z_pos1[0]=hits[0].getPositionVec().Z()
@@ -115,7 +115,7 @@ for f in fnames:
 
             #Decoder
             cellID2 = int(hits[1].getCellID0())
-            decoder.setValue(cellID1)
+            decoder.setValue(cellID2)
             layer2[0] = decoder['layer'].value()
             system2[0] = decoder["system"].value()
             side2[0] = decoder["side"].value()
