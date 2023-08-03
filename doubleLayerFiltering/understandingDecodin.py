@@ -76,7 +76,7 @@ for f in fnames:
             decoder = UTIL.BitField64(encoding)
             SiTracks=event.getCollection("SiTracks")
             tracks =[i for i in SiTracks]
-            hits = [i for i in tracks[0]]
+            hits = [i for i in tracks[0].getTrackerHits()]
             print(collection + ":")
             for hit in hits:
                 cellID = int(hit.getCellID0())
