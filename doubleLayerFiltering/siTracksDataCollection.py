@@ -65,7 +65,7 @@ tree.Branch("side2", side2, 'var/D')
 
 #Comment out one of the two fnames definitions to run the other
 #No BIB input files
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/*100.slcio")
+fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*100.slcio")
 
 #BIB input files
 #fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
