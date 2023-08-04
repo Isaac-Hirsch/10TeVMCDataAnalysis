@@ -154,34 +154,64 @@ for f in fnames:
             side2[0] = decoder["side"].value()
 
             #Third hit
-            x_pos3[0]=hits[2].getPositionVec().X()
-            y_pos3[0]=hits[2].getPositionVec().Y()
-            z_pos3[0]=hits[2].getPositionVec().Z()
-            time3[0]=hits[2].getTime()
-            theta3[0]=hits[2].getPositionVec().Theta()
-            phi3[0]=hits[2].getPositionVec().Phi()
+            if len(hits >= 3):
+                x_pos3[0]=hits[2].getPositionVec().X()
+                y_pos3[0]=hits[2].getPositionVec().Y()
+                z_pos3[0]=hits[2].getPositionVec().Z()
+                time3[0]=hits[2].getTime()
+                theta3[0]=hits[2].getPositionVec().Theta()
+                phi3[0]=hits[2].getPositionVec().Phi()
 
-            #Decoder
-            cellID3 = int(hits[2].getCellID0())
-            decoder.setValue(cellID3)
-            layer3[0] = decoder['layer'].value()
-            system3[0] = decoder["system"].value()
-            side3[0] = decoder["side"].value()
+                #Decoder
+                cellID3 = int(hits[2].getCellID0())
+                decoder.setValue(cellID3)
+                layer3[0] = decoder['layer'].value()
+                system3[0] = decoder["system"].value()
+                side3[0] = decoder["side"].value()
+
+            else:
+                x_pos3[0]=0
+                y_pos3[0]=0
+                z_pos3[0]=0
+                time3[0]=0
+                theta3[0]=0
+                phi3[0]=0
+
+                #Decoder
+                layer3[0] = 0
+                system3[0] = 0
+                side3[0] = 0
+
+            
 
             #Fourth hit
-            x_pos4[0]=hits[3].getPositionVec().X()
-            y_pos4[0]=hits[3].getPositionVec().Y()
-            z_pos4[0]=hits[3].getPositionVec().Z()
-            time4[0]=hits[3].getTime()
-            theta4[0]=hits[3].getPositionVec().Theta()
-            phi4[0]=hits[3].getPositionVec().Phi()
+            if len(hits >= 4):
+                x_pos4[0]=hits[3].getPositionVec().X()
+                y_pos4[0]=hits[3].getPositionVec().Y()
+                z_pos4[0]=hits[3].getPositionVec().Z()
+                time4[0]=hits[3].getTime()
+                theta4[0]=hits[3].getPositionVec().Theta()
+                phi4[0]=hits[3].getPositionVec().Phi()
 
-            #Decoder
-            cellID4 = int(hits[3].getCellID0())
-            decoder.setValue(cellID4)
-            layer4[0] = decoder['layer'].value()
-            system4[0] = decoder["system"].value()
-            side4[0] = decoder["side"].value()
+                #Decoder
+                cellID4 = int(hits[3].getCellID0())
+                decoder.setValue(cellID4)
+                layer4[0] = decoder['layer'].value()
+                system4[0] = decoder["system"].value()
+                side4[0] = decoder["side"].value()
+            
+            else:
+                x_pos4[0]=0
+                y_pos4[0]=0
+                z_pos4[0]=0
+                time4[0]=0
+                theta4[0]=0
+                phi4[0]=0
+
+                #Decoder
+                layer4[0] = 0
+                system4[0] = 0
+                side4[0] = 0
 
             #Filling the data from the pointers into the tree
             tree.Fill()
