@@ -116,7 +116,8 @@ for f in fnames:
     for event in reader:
         # setting decoder
         tracksCollection = event.getCollection("SiTracks")
-        encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        encodCol = event.getCollection("IBTrackerHits")
+        encoding = encodCol.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
 
         #Get tracks within the collection
