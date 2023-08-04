@@ -154,7 +154,7 @@ for f in fnames:
             side2[0] = decoder["side"].value()
 
             #Third hit
-            if len(hits >= 3):
+            if len(hits) >= 3:
                 x_pos3[0]=hits[2].getPositionVec().X()
                 y_pos3[0]=hits[2].getPositionVec().Y()
                 z_pos3[0]=hits[2].getPositionVec().Z()
@@ -185,7 +185,7 @@ for f in fnames:
             
 
             #Fourth hit
-            if len(hits >= 4):
+            if len(hits) >= 4:
                 x_pos4[0]=hits[3].getPositionVec().X()
                 y_pos4[0]=hits[3].getPositionVec().Y()
                 z_pos4[0]=hits[3].getPositionVec().Z()
