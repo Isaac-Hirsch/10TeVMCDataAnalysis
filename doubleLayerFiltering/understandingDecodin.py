@@ -66,10 +66,13 @@ collections=[
     ]
 methods=[]
 
+i=0
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
     for event in reader:
+        print("NEW EVENT"+str(i))
+        i+=1
         for collection in collections:
             tracksCollection = event.getCollection(collection)
             encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
