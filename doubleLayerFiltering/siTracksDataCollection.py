@@ -38,6 +38,26 @@ system2 = array ('d', [0])
 layer2 = array ('d', [0])
 side2 = array('d', [0])
 
+x_pos3 = array('d', [0])
+y_pos3 = array('d', [0])
+z_pos3 = array('d', [0])
+time3 = array ('d', [0])
+theta3 = array('d', [0])
+phi3 = array('d', [0])
+system3 = array ('d', [0])
+layer3 = array ('d', [0])
+side3 = array('d', [0])
+
+x_pos4 = array('d', [0])
+y_pos4 = array('d', [0])
+z_pos4 = array('d', [0])
+time4 = array ('d', [0])
+theta4 = array('d', [0])
+phi4 = array('d', [0])
+system4 = array ('d', [0])
+layer4 = array ('d', [0])
+side4 = array('d', [0])
+
 #Initialzing branches for each layer
 tree.Branch("x1",  x_pos1,  'var/D')
 tree.Branch("y1",  y_pos1,  'var/D')
@@ -58,6 +78,26 @@ tree.Branch("phi2", phi2, 'var/D')
 tree.Branch("system2", system2, 'var/D')
 tree.Branch("layer2", layer2, 'var/D')
 tree.Branch("side2", side2, 'var/D')
+
+tree.Branch("x3",  x_pos3,  'var/D')
+tree.Branch("y3",  y_pos3,  'var/D')
+tree.Branch("z3", z_pos3, 'var/D')
+tree.Branch("t3", time3, 'var/D')
+tree.Branch("theta3", theta3, 'var/D')
+tree.Branch("phi3", phi3, 'var/D')
+tree.Branch("system3", system3, 'var/D')
+tree.Branch("layer3", layer3, 'var/D')
+tree.Branch("side3", side3, 'var/D')
+
+tree.Branch("x4",  x_pos4,  'var/D')
+tree.Branch("y4",  y_pos4,  'var/D')
+tree.Branch("z4", z_pos4, 'var/D')
+tree.Branch("t4", time4, 'var/D')
+tree.Branch("theta4", theta4, 'var/D')
+tree.Branch("phi4", phi4, 'var/D')
+tree.Branch("system4", system4, 'var/D')
+tree.Branch("layer4", layer4, 'var/D')
+tree.Branch("side4", side4, 'var/D')
 
 #Comment out one of the two fnames definitions to run the other
 #No BIB input files
@@ -102,8 +142,8 @@ for f in fnames:
             y_pos2[0]=hits[1].getPositionVec().Y()
             z_pos2[0]=hits[1].getPositionVec().Z()
             time2[0]=hits[1].getTime()
-            theta2[0]=hits[0].getPositionVec().Theta()
-            phi2[0]=hits[0].getPositionVec().Phi()
+            theta2[0]=hits[1].getPositionVec().Theta()
+            phi2[0]=hits[1].getPositionVec().Phi()
 
             #Decoder
             cellID2 = int(hits[1].getCellID0())
@@ -111,6 +151,36 @@ for f in fnames:
             layer2[0] = decoder['layer'].value()
             system2[0] = decoder["system"].value()
             side2[0] = decoder["side"].value()
+
+            #Third hit
+            x_pos3[0]=hits[2].getPositionVec().X()
+            y_pos3[0]=hits[2].getPositionVec().Y()
+            z_pos3[0]=hits[2].getPositionVec().Z()
+            time3[0]=hits[2].getTime()
+            theta3[0]=hits[2].getPositionVec().Theta()
+            phi3[0]=hits[2].getPositionVec().Phi()
+
+            #Decoder
+            cellID3 = int(hits[2].getCellID0())
+            decoder.setValue(cellID3)
+            layer3[0] = decoder['layer'].value()
+            system3[0] = decoder["system"].value()
+            side3[0] = decoder["side"].value()
+
+            #Fourth hit
+            x_pos4[0]=hits[3].getPositionVec().X()
+            y_pos4[0]=hits[3].getPositionVec().Y()
+            z_pos4[0]=hits[3].getPositionVec().Z()
+            time4[0]=hits[3].getTime()
+            theta4[0]=hits[3].getPositionVec().Theta()
+            phi4[0]=hits[3].getPositionVec().Phi()
+
+            #Decoder
+            cellID4 = int(hits[3].getCellID0())
+            decoder.setValue(cellID4)
+            layer4[0] = decoder['layer'].value()
+            system4[0] = decoder["system"].value()
+            side4[0] = decoder["side"].value()
 
             #Filling the data from the pointers into the tree
             tree.Fill()
