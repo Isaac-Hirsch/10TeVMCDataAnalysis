@@ -5,21 +5,17 @@ from ROOT import TH1D, TH2D, TFile, TLorentzVector, TTree, TMath
 import glob
 from optparse import OptionParser
 import numpy as np
-import matplotlib.pyplot as plt
-
-#Importing plot styles
-plt.style.use('seaborn-v0_8-colorblind')
-plt.rcParams.update({'font.size': 20,
-                    'xtick.labelsize' : 40,
-                    'ytick.labelsize' : 40,
-                    'xtick.major.size' : 10,
-                    'ytick.major.size' : 10,
-                    'xtick.minor.size' : 5,
-                    'ytick.minor.size' : 5,
-                    'axes.labelsize' : 50,
-                    'axes.titlesize' : 50}) 
+import json
 
 Bfield=3.56  # T
+
+#Boiler plate to export files from server to be analyzed locally
+parser = OptionParser()
+parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
+                  type=str, default='Output_REC.slcio')
+parser.add_option('-o', '--outFile', help='--outFile doubleLayerHits',
+                  type=str, default='doubleLayerHits')
+(options, args) = parser.parse_args()
 
 #Gathering all muonGun files without BIB
 noBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
@@ -101,6 +97,7 @@ for file in noBIBFiles:
                     if doubleID:
                         noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                         noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
+reader.close()
 
 #Repeating the previous study fro BIB files     
 for file in BIBFiles:
@@ -176,4 +173,23 @@ for file in BIBFiles:
                     if doubleID:
                         BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                         BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
+reader.close()
 
+output={
+    "BIB/negZTheta" : BIBDeltaTheta[:4],
+    "BIB/posZTheta" : BIBDeltaTheta[4:8],
+    "BIB/barTheta" : BIBDeltaTheta[8:],
+    "BIB/negZPhi" : BIBDeltaPhi[:4],
+    "BIB/posZPhi" : BIBDeltaPhi[4:8],
+    "BIB/barPhi" : BIBDeltaPhi[8:],
+    "noBIB/negZTheta" : noBIBDeltaTheta[:4],
+    "noBIB/posZTheta" : noBIBDeltaTheta[4:8],
+    "noBIB/barTheta" : noBIBDeltaTheta[8:],
+    "noBIB/negZPhi" : noBIBDeltaPhi[:4],
+    "noBIB/posZPhi" : noBIBDeltaPhi[4:8],
+    "noBIB/barPhi" : noBIBDeltaPhi[8:]
+}
+
+output_json = options.outFile+".json"
+with open(output_json, 'w') as fp:
+            json.dump(output, fp)
