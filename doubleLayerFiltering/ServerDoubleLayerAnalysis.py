@@ -97,10 +97,10 @@ for file in noBIBFiles:
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
+            doubleID=zeroHit & oneHit
             print("double")
             print(doubleID)
             j=0
-            doubleID=zeroHit & oneHit
             for i in range(12):
                 if doubleID[i]:
                     print(j)
