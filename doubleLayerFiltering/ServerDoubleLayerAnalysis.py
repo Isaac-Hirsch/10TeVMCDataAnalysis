@@ -174,8 +174,12 @@ for file in BIBFiles:
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
             doubleID=zeroHit & oneHit
+            print(doubleID)
+            j=0
             for i in range(12):
                 if doubleID[i]:
+                    print(j)
+                    j+=1
                     BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                     BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
