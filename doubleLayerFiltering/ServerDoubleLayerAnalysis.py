@@ -93,11 +93,11 @@ for file in noBIBFiles:
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
-                doubleID=zeroHit & oneHit
-                for i in range(12):
-                    if doubleID[i]:
-                        noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
-                        noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
+            doubleID=zeroHit & oneHit
+            for i in range(12):
+                if doubleID[i]:
+                    noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
+                    noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
 
 #Repeating the previous study fro BIB files     
@@ -169,11 +169,11 @@ for file in BIBFiles:
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
-                doubleID=zeroHit & oneHit
-                for i in range(12):
-                    if doubleID[i]:
-                        BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
-                        BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
+            doubleID=zeroHit & oneHit
+            for i in range(12):
+                if doubleID[i]:
+                    BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
+                    BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
 
 output={
