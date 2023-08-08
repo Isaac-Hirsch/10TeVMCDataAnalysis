@@ -180,6 +180,9 @@ for file in BIBFiles:
                     BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
 
+for i in range(12):
+    print(len(noBIBDeltaPhi[i]))
+
 output={
     #"BIB/negZTheta" : BIBDeltaTheta[:4],
     #"BIB/posZTheta" : BIBDeltaTheta[4:8],
