@@ -24,18 +24,20 @@ noBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuCo
 #BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_{?,1?,2?}0.slcio")
 BIBFiles=[]
 
+#initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
+noBIBDeltaTheta=[]
+noBIBDeltaPhi=[]
+
+#Initialize an array for each doublet:
+for i in range(12):
+    noBIBDeltaTheta.append([])
+    noBIBDeltaPhi.append([])
+
 #Calculating the delta phi and delta theta for all noBIB samples for all SiTracks and vertex doublets
 for file in noBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
 
-    #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
-    noBIBDeltaTheta=[]
-    noBIBDeltaPhi=[]
-    #Initialize an array for each doublet:
-    for i in range(12):
-        noBIBDeltaTheta.append([])
-        noBIBDeltaPhi.append([])
 
     for event in reader:
         #We will be using SiTracks collection to find which hits coorespond to the same track.
@@ -82,8 +84,6 @@ for file in noBIBFiles:
                     if (layer % 2) ==0:
                         #Using a hashing function to map each layer to a spot in the array
                         id=4*side+layer//2
-                        print('layer % 2 ==0')
-                        print(id)
                         zeroHit[id]=True
                         thetaZeroHit[id]=position.Theta()
                         phiZeroHit[id]=position.Phi()
@@ -92,35 +92,29 @@ for file in noBIBFiles:
                     if (layer % 2) ==1:
                         #Using a hashing function to map each layer to a spot in the array
                         id=4*side+layer//2
-                        print('layer % 2 ==1')
-                        print(id)
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
             doubleID=zeroHit & oneHit
-            print("double")
-            print(doubleID)
-            j=0
             for i in range(12):
                 if doubleID[i]:
-                    print(j)
-                    j+=1
                     noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                     noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
+
+#initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
+BIBDeltaTheta=[]
+BIBDeltaPhi=[]
+#Initialize a list for each doublet:
+for i in range(12):
+    BIBDeltaTheta.append([])
+    BIBDeltaPhi.append([])
 
 #Repeating the previous study fro BIB files     
 for file in BIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
 
-    #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
-    BIBDeltaTheta=[]
-    BIBDeltaPhi=[]
-    #Initialize a list for each doublet:
-    for i in range(12):
-        BIBDeltaTheta.append([])
-        BIBDeltaPhi.append([])
 
     for event in reader:
         #We will be using SiTracks collection to find which hits coorespond to the same track.
@@ -179,19 +173,11 @@ for file in BIBFiles:
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
             doubleID=zeroHit & oneHit
-            print("double")
-            print(doubleID)
-            j=0
             for i in range(12):
                 if doubleID[i]:
-                    print(j)
-                    j+=1
                     BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                     BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
-
-for i in range(12):
-    print(len(noBIBDeltaPhi[i]))
 
 output={
     #"BIB/negZTheta" : BIBDeltaTheta[:4],
