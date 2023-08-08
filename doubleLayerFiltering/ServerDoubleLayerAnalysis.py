@@ -21,8 +21,7 @@ parser.add_option('-o', '--outFile', help='--outFile doubleLayerHits',
 noBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
 
 #Gathering the 29 files from 10-290 in the muon gun samples
-#BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_{?,1?,2?}0.slcio")
-BIBFiles=[]
+BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_{?,1?,2?}0.slcio")
 
 #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
 noBIBDeltaTheta=[]
@@ -180,12 +179,12 @@ for file in BIBFiles:
 reader.close()
 
 output={
-    #"BIB/negZTheta" : BIBDeltaTheta[:4],
-    #"BIB/posZTheta" : BIBDeltaTheta[4:8],
-    #"BIB/barTheta" : BIBDeltaTheta[8:],
-    #"BIB/negZPhi" : BIBDeltaPhi[:4],
-    #"BIB/posZPhi" : BIBDeltaPhi[4:8],
-    #"BIB/barPhi" : BIBDeltaPhi[8:],
+    "BIB/negZTheta" : BIBDeltaTheta[:4],
+    "BIB/posZTheta" : BIBDeltaTheta[4:8],
+    "BIB/barTheta" : BIBDeltaTheta[8:],
+    "BIB/negZPhi" : BIBDeltaPhi[:4],
+    "BIB/posZPhi" : BIBDeltaPhi[4:8],
+    "BIB/barPhi" : BIBDeltaPhi[8:],
     "noBIB/negZTheta" : noBIBDeltaTheta[:4],
     "noBIB/posZTheta" : noBIBDeltaTheta[4:8],
     "noBIB/barTheta" : noBIBDeltaTheta[8:],
