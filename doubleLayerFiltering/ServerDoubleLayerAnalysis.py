@@ -29,13 +29,13 @@ for file in noBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
 
-    #initializing lists of arrays to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
+    #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
     noBIBDeltaTheta=[]
     noBIBDeltaPhi=[]
-    #Initialize an array for for doublet:
+    #Initialize an array for each doublet:
     for i in range(12):
         noBIBDeltaTheta.append([])
-        noBIBDeltaPhi.append(np.array([]))
+        noBIBDeltaPhi.append([])
 
     for event in reader:
         #We will be using SiTracks collection to find which hits coorespond to the same track.
@@ -62,7 +62,7 @@ for file in noBIBFiles:
             phiOneHit=np.zeros(12)
 
             #Gathering the hits in each track
-            for hit in track:
+            for hit in track.getTrackerHits():
                 #Get information on which detector the hit came from
                 cellID=int(hit.getCellID0())
                 decoder.setValue(cellID)
@@ -95,7 +95,7 @@ for file in noBIBFiles:
                         phiOneHit[id]=position.Phi()
                 doubleID=zeroHit & oneHit
                 for i in range(12):
-                    if doubleID:
+                    if doubleID[i]:
                         noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                         noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
@@ -105,13 +105,13 @@ for file in BIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
 
-    #initializing lists of arrays to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
+    #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
     BIBDeltaTheta=[]
     BIBDeltaPhi=[]
-    #Initialize an array for for doublet:
+    #Initialize a list for each doublet:
     for i in range(12):
         BIBDeltaTheta.append([])
-        BIBDeltaPhi.append(np.array([]))
+        BIBDeltaPhi.append([])
 
     for event in reader:
         #We will be using SiTracks collection to find which hits coorespond to the same track.
@@ -138,7 +138,7 @@ for file in BIBFiles:
             phiOneHit=np.zeros(12)
 
             #Gathering the hits in each track
-            for hit in track:
+            for hit in track.getTrackerHits():
                 #Get information on which detector the hit came from
                 cellID=int(hit.getCellID0())
                 decoder.setValue(cellID)
@@ -171,7 +171,7 @@ for file in BIBFiles:
                         phiOneHit[id]=position.Phi()
                 doubleID=zeroHit & oneHit
                 for i in range(12):
-                    if doubleID:
+                    if doubleID[i]:
                         BIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                         BIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
