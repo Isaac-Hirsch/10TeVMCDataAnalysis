@@ -174,6 +174,7 @@ for file in BIBFiles:
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
             doubleID=zeroHit & oneHit
+            print("double")
             print(doubleID)
             j=0
             for i in range(12):
