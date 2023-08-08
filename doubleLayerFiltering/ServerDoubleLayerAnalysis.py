@@ -53,11 +53,11 @@ for file in noBIBFiles:
             #thetaZeroHit will track the theta of hits on the first layer of the doublets with 0-3 being in the -z endcap, 4-7 being in the +z endcap, and 8-11 being in the barrel
             #thetaOnetHit will do the same with the second layer of the doublets
             zeroHit=np.zeros(12, dtype=bool)
+            oneHit=np.zeros(12, dtype=bool)
             thetaZeroHit=np.zeros(12)
             thetaOneHit=np.zeros(12)
 
             #phiZeroHit and phiOnetHit will do the same with phi
-            oneHit=np.zeros(12, dtype=bool)
             phiZeroHit=np.zeros(12)
             phiOneHit=np.zeros(12)
 
@@ -68,7 +68,7 @@ for file in noBIBFiles:
                 decoder.setValue(cellID)
                 system=decoder["system"].value()
 
-                #Check wether the hit was in the vertex barrel (system==1) or in the vertex endcaps (system==2)
+                #Check whether the hit was in the vertex barrel (system==1) or in the vertex endcaps (system==2)
                 if ((system==1) | (system==2)):
                     #Layer counts which layer of the detector you are in, with 0 being the smallest radius barrel layer or smallest z endcap
                     layer = decoder['layer'].value()
@@ -82,6 +82,8 @@ for file in noBIBFiles:
                     if (layer % 2) ==0:
                         #Using a hashing function to map each layer to a spot in the array
                         id=4*side+layer//2
+                        print('layer % 2 ==0')
+                        print(id)
                         zeroHit[id]=True
                         thetaZeroHit[id]=position.Theta()
                         phiZeroHit[id]=position.Phi()
@@ -90,6 +92,8 @@ for file in noBIBFiles:
                     if (layer % 2) ==1:
                         #Using a hashing function to map each layer to a spot in the array
                         id=4*side+layer//2
+                        print('layer % 2 ==1')
+                        print(id)
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
@@ -129,11 +133,11 @@ for file in BIBFiles:
             #thetaZeroHit will track the theta of hits on the first layer of the doublets with 0-3 being in the -z endcap, 4-7 being in the +z endcap, and 8-11 being in the barrel
             #thetaOnetHit will do the same with the second layer of the doublets
             zeroHit=np.zeros(12, dtype=bool)
+            oneHit=np.zeros(12, dtype=bool)
             thetaZeroHit=np.zeros(12)
             thetaOneHit=np.zeros(12)
 
             #phiZeroHit and phiOnetHit will do the same with phi
-            oneHit=np.zeros(12, dtype=bool)
             phiZeroHit=np.zeros(12)
             phiOneHit=np.zeros(12)
 
