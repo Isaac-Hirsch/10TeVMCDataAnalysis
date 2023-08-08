@@ -21,7 +21,8 @@ parser.add_option('-o', '--outFile', help='--outFile doubleLayerHits',
 noBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
 
 #Gathering the 29 files from 10-290 in the muon gun samples
-BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_{?,1?,2?}0.slcio")
+#BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_{?,1?,2?}0.slcio")
+BIBFiles=[]
 
 #Calculating the delta phi and delta theta for all noBIB samples for all SiTracks and vertex doublets
 for file in noBIBFiles:
@@ -176,12 +177,12 @@ for file in BIBFiles:
 reader.close()
 
 output={
-    "BIB/negZTheta" : BIBDeltaTheta[:4],
-    "BIB/posZTheta" : BIBDeltaTheta[4:8],
-    "BIB/barTheta" : BIBDeltaTheta[8:],
-    "BIB/negZPhi" : BIBDeltaPhi[:4],
-    "BIB/posZPhi" : BIBDeltaPhi[4:8],
-    "BIB/barPhi" : BIBDeltaPhi[8:],
+    #"BIB/negZTheta" : BIBDeltaTheta[:4],
+    #"BIB/posZTheta" : BIBDeltaTheta[4:8],
+    #"BIB/barTheta" : BIBDeltaTheta[8:],
+    #"BIB/negZPhi" : BIBDeltaPhi[:4],
+    #"BIB/posZPhi" : BIBDeltaPhi[4:8],
+    #"BIB/barPhi" : BIBDeltaPhi[8:],
     "noBIB/negZTheta" : noBIBDeltaTheta[:4],
     "noBIB/posZTheta" : noBIBDeltaTheta[4:8],
     "noBIB/barTheta" : noBIBDeltaTheta[8:],
