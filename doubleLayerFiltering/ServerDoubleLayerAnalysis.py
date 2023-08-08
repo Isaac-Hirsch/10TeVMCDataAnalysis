@@ -97,9 +97,14 @@ for file in noBIBFiles:
                         oneHit[id]=True
                         thetaOneHit[id]=position.Theta()
                         phiOneHit[id]=position.Phi()
+            print("double")
+            print(doubleID)
+            j=0
             doubleID=zeroHit & oneHit
             for i in range(12):
                 if doubleID[i]:
+                    print(j)
+                    j+=1
                     noBIBDeltaTheta[i].append(thetaOneHit[i]-thetaZeroHit[i])
                     noBIBDeltaPhi[i].append(phiOneHit[i]-phiZeroHit[i])
 reader.close()
