@@ -32,7 +32,7 @@ for i in range(12):
     noBIBDeltaTheta.append([])
     noBIBDeltaPhi.append([])
 
-#Calculating the delta phi and delta theta for all noBIB samples for all SiTracks and vertex doublets
+#Calculating the delta phi and delta theta for all noBIB samples for all SiTracks and vertex doublet hits
 for file in noBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
