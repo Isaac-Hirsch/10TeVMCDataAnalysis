@@ -11,8 +11,8 @@ Bfield = 3.56  # T
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.root',
-                  type=str, default='ntup_hits_SiTracksNOBIB.root')
+parser.add_option('-o', '--outFile', help='--outFile ntup_hits_AllTracksNOBIB.root',
+                  type=str, default='ntup_hits_AllTracksNOBIB.root')
 (options, args) = parser.parse_args()
 
 tree = TTree("tracks_tree", "tracks_tree")
@@ -115,7 +115,7 @@ for f in fnames:
     #Loop over events
     for event in reader:
         # setting decoder
-        tracksCollection = event.getCollection("SiTracks")
+        tracksCollection = event.getCollection("AllTracks")
         encodCol = event.getCollection("IBTrackerHits")
         encoding = encodCol.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
