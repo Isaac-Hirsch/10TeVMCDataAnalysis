@@ -180,17 +180,17 @@ reader.close()
 
 output={
     "BIB/negZTheta" : BIBDeltaTheta[:4],
-    "BIB/posZTheta" : BIBDeltaTheta[4:8],
-    "BIB/barTheta" : BIBDeltaTheta[8:],
+    "BIB/barTheta" : BIBDeltaTheta[4:8],
+    "BIB/posZTheta" : BIBDeltaTheta[8:],
     "BIB/negZPhi" : BIBDeltaPhi[:4],
-    "BIB/posZPhi" : BIBDeltaPhi[4:8],
-    "BIB/barPhi" : BIBDeltaPhi[8:],
+    "BIB/barPhi" : BIBDeltaPhi[4:8],
+    "BIB/posZPhi" : BIBDeltaPhi[8:],
     "noBIB/negZTheta" : noBIBDeltaTheta[:4],
-    "noBIB/posZTheta" : noBIBDeltaTheta[4:8],
-    "noBIB/barTheta" : noBIBDeltaTheta[8:],
+    "noBIB/barTheta" : noBIBDeltaTheta[4:8],
+    "noBIB/posZTheta" : noBIBDeltaTheta[8:],
     "noBIB/negZPhi" : noBIBDeltaPhi[:4],
-    "noBIB/posZPhi" : noBIBDeltaPhi[4:8],
-    "noBIB/barPhi" : noBIBDeltaPhi[8:]
+    "noBIB/barPhi" : noBIBDeltaPhi[4:8],
+    "noBIB/posZPhi" : noBIBDeltaPhi[8:]
 }
 
 output_json = options.outFile+".json"
