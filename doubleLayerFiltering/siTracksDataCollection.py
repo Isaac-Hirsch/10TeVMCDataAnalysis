@@ -11,8 +11,8 @@ Bfield = 3.56  # T
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile ntup_hits_AllTracksNOBIB.root',
-                  type=str, default='ntup_hits_AllTracksNOBIB.root')
+parser.add_option('-o', '--outFile', help='--outFile ntup_hits_AllTracksBIB.root',
+                  type=str, default='ntup_hits_AllTracksBIB.root')
 (options, args) = parser.parse_args()
 
 tree = TTree("tracks_tree", "tracks_tree")
@@ -101,10 +101,10 @@ tree.Branch("side4", side4, 'var/D')
 
 #Comment out one of the two fnames definitions to run the other
 #No BIB input files
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
+#fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
 
 #BIB input files
-#fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
+fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_1[123]0.slcio")
 
 # Loop over files
 i = 0 #keep track of which event we are on for readout purposes
