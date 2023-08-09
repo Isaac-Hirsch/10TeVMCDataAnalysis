@@ -21,7 +21,7 @@ parser.add_option('-o', '--outFile', help='--outFile doubleLayerHits',
 noBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/reco/*.slcio")
 
 #Gathering the 29 files from 10-290 in the muon gun samples
-BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/photonGun_reco_?0.slcio")
+BIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/photonGun_reco_{,?}0.slcio")
 
 #initializing lists of lists to store the results in. For the outer list, 0-3 will be doublets in the -z endcaps, 4-7 are doublets in the barrel, and 8-11 are doublets in the +z endcaps
 noBIBDeltaTheta=[]
