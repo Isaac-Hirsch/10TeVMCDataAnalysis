@@ -59,7 +59,7 @@ for file in muonNoBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                muonNoBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                muonNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 muonBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
@@ -86,7 +86,7 @@ for file in muonBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                muonBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                muonBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 photonNoBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
@@ -113,7 +113,7 @@ for file in photonNoBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                photonNoBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                photonNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 photonBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
@@ -140,7 +140,7 @@ for file in photonBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                photonBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                photonBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 pionNoBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
@@ -167,7 +167,7 @@ for file in pionNoBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                pionNoBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                pionNoBIBSiTrack[3*((system-1))//2+side][layer]+=1
 reader.close()
 
 pionBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
@@ -194,7 +194,7 @@ for file in pionBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                pionBIBSiTrack[3*(system-1)//2+side][layer]+=1
+                pionBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 output={
