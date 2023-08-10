@@ -27,13 +27,13 @@ photonNoBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMu
 pionNoBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/pionGun/reco/*.slcio")
 
 #Gathering all muonGun files with BIB
-muonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_0.slcio")
+muonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/muonGun_reco_[123]0.slcio")
 
 #Gathering all muonGun files with BIB
-photonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/photonGun_reco_10.slcio")
+photonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/photonGun_reco_[123]0.slcio")
 
 #Gathering all muonGun files with BIB
-pionBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/pionGun/recoBIB/pionGun_reco_20.slcio")
+pionBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/pionGun/recoBIB/pionGun_reco_[123]0.slcio")
 
 muonNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
