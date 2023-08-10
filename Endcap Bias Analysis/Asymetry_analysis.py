@@ -35,7 +35,7 @@ photonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_
 #Gathering all muonGun files with BIB
 pionBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/pionGun/recoBIB/20.slcio")
 
-muonNoBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+muonNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in muonNoBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
@@ -62,7 +62,7 @@ for file in muonNoBIBFiles:
                 muonNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
-muonBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+muonBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in muonBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
@@ -89,7 +89,7 @@ for file in muonBIBFiles:
                 muonBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
-photonNoBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+photonNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in photonNoBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
@@ -116,7 +116,7 @@ for file in photonNoBIBFiles:
                 photonNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
-photonBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+photonBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in photonBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
@@ -143,7 +143,7 @@ for file in photonBIBFiles:
                 photonBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
-pionNoBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+pionNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in pionNoBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
@@ -170,7 +170,7 @@ for file in pionNoBIBFiles:
                 pionNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
-pionBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
+pionBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
 for file in pionBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
