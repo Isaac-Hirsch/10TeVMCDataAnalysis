@@ -167,7 +167,7 @@ for file in pionNoBIBFiles:
                 layer = decoder['layer'].value()
 
                 #Counting the hit
-                pionNoBIBSiTrack[3*((system-1))//2+side][layer]+=1
+                pionNoBIBSiTrack[3*((system-1)//2)+side][layer]+=1
 reader.close()
 
 pionBIBSiTrack=[np.zeros(8),np.zeros(8),np.zeros(8),np.zeros(7),np.zeros(3),np.zeros(7),np.zeros(4),np.zeros(3),np.zeros(4)]
