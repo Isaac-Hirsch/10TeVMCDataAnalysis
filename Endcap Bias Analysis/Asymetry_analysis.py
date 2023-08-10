@@ -30,7 +30,7 @@ pionNoBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_
 muonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/0.slcio")
 
 #Gathering all muonGun files with BIB
-photonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/1.slcio")
+photonBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/photonGun/recoBIB/10.slcio")
 
 #Gathering all muonGun files with BIB
 pionBIBFiles=glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/pionGun/recoBIB/20.slcio")
