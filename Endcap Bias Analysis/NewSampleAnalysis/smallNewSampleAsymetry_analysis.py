@@ -34,10 +34,6 @@ for file in muon250NoBIBFiles:
     reader=IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(file)
 
-    print("Events:")
-    print([event for event in reader])
-    print(len([event for event in reader]))
-
     for event in reader:
         tracksCollection = event.getCollection("SiTracks")
         #creating a decoder that will be used layer to trace a hit back to its system and layer
