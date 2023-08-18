@@ -13,7 +13,7 @@ parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
 parser.add_option('-o', '--outFile', help='--outFile hitsPerLayer',
-                  type=str, default='hitsPerLayer')
+                  type=str, default='noBIBEndcapAnalysis')
 (options, args) = parser.parse_args()
 
 
