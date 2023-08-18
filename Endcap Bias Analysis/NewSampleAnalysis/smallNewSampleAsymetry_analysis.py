@@ -113,7 +113,7 @@ reader.close()
 
 del muon1000NoBIBFiles
 
-photonNoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/photonGun_pT_0_50/photonGun_pT_0_50_reco_*  .slcio")
+photonNoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/photonGun_pT_0_50/photonGun_pT_0_50_reco_*.slcio")
 
 photonNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
