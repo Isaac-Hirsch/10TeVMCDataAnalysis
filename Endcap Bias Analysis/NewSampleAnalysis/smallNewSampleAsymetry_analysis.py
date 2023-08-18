@@ -18,7 +18,7 @@ parser.add_option('-o', '--outFile', help='--outFile NoBIBHitsPerLayer',
 
 
 #Gathering all muonGun files without BIB
-muon250NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_4??0.slcio")
+muon250NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_*.slcio")
 
 muon250NoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
@@ -50,7 +50,7 @@ reader.close()
 del muon250NoBIBFiles
 
 #Gathering all pionGun files without BIB
-muon0NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_5??0.slcio")
+muon0NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
 
 muon0NoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
@@ -82,7 +82,7 @@ reader.close()
 del muon0NoBIBFiles
 
 #Gathering all pionGun files without BIB
-muon1000NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_1000_5000/muonGun_pT_1000_5000_reco_7??0.slcio")
+muon1000NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_1000_5000/muonGun_pT_1000_5000_reco_*.slcio")
 
 muon1000NoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
@@ -113,7 +113,7 @@ reader.close()
 
 del muon1000NoBIBFiles
 
-photonNoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/photonGun_pT_0_50/photonGun_pT_0_50_reco_2??0.slcio.slcio")
+photonNoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/photonGun_pT_0_50/photonGun_pT_0_50_reco_*  .slcio")
 
 photonNoBIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
