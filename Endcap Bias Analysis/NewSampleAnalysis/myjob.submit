@@ -1,0 +1,14 @@
+Universe = Vanilla
+Executable     = run.sh
+Error   = output.err.$(Cluster)-$(Process)
+Output  = output.out.$(Cluster)-$(Process)
+Log     = output.log.$(Cluster)
+transfer_input_files = DataGathering.py
+should_transfer_files = YES
+WhenToTransferOutput = ON_EXIT
+request_cpus = 1
++WantsStashCache = true
+request_memory = 1 GB
+request_disk = 9225000000
++ProjectName="snowmass21"
+Queue 1
