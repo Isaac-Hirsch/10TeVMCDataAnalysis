@@ -18,15 +18,15 @@ parser.add_option('-o', '--outFile', help='--outFile hitsPerLayer',
 
 
 #Gathering all muonGun files with BIB
-muon250BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_9[012]00.slcio")
+muon250BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_[12]?00.slcio")
 
 #Gathering all muonGun files with BIB
-muon0BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_0_50/muonGun_pT_0_50_reco_5[234]00.slcio")
+muon0BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_0_50/muonGun_pT_0_50_reco_[78]?00.slcio")
 
 #Gathering all muonGun files with BIB
-muon1000BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_1000_5000/muonGun_pT_1000_5000_reco_7[456]00.slcio")
+muon1000BIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_1000_5000/muonGun_pT_1000_5000_reco_[56]?00.slcio")
 
-photonBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_3[678]00.slcio")
+photonBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_[34]?00.slcio")
 
 muon250BIBSiTrack=[np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(8,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(7,dtype=int).tolist(),np.zeros(4,dtype=int).tolist(),np.zeros(3,dtype=int).tolist(),np.zeros(4,dtype=int).tolist()]
 
