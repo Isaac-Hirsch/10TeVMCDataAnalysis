@@ -18,7 +18,7 @@ parser.add_option('-o', '--outFile', help='--outFile NoBIBHitsPerLayer',
 
 
 #Gathering all muonGun files without BIB
-muon250NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/*.slcio")
+muon250NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_5280.slcio")
 
 #Gathering all pionGun files without BIB
 muon0NoBIBFiles=glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/muonGun_pT_0_50/*.slcio")
