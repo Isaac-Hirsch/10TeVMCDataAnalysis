@@ -17,7 +17,7 @@ parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.roo
 
 tree = TTree("tracks_tree", "tracks_tree")
 
-fnames = glob.glob("/data/fmeloni/LegacyProductions/before29Jul23/DataMuC_MuColl_v1/muonGun/recoBIB/*100.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2000.slcio")
 
 collections=[
     "AllTracks",
@@ -64,6 +64,22 @@ collections=[
     "YokeBarrelCollection",
     "YokeEndcapCollection"
     ]
+
+for f in fnames:
+    reader = IOIMPL.LCFactory.getInstance().createLCReader()
+    reader.open(f)
+
+    for event in reader:
+
+        #Looking at the only doublet layer in the vertex barrel
+        tracksCollection = event.getCollection("VBTrackerHits")
+        #creating a decoder that will be used layer to trace a hit back to its system and layer
+        encoding=tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        decoder=UTIL.BitField64(encoding)
+        for hit in event.getCollection(tracksCollection):
+            print(dir(hit.getPositionVec))
+
+
 methods=[]
 
 i=0
