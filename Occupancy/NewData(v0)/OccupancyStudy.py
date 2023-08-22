@@ -19,7 +19,7 @@ parser.add_option('-o', '--outFile', help='--outFile occupancyRate',
 (options, args) = parser.parse_args()
 
 #BIB input files
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2??0.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[12]?0.slcio")
 
 #List of collections
 collections=[
@@ -35,7 +35,7 @@ collections=[
 numEvents=0
 
 #layers for design v0
-layNum=[5,16,3,14,3,8]
+layNum=[8,16,3,14,3,8]
 layers=[]
 for i in layNum:
     sys=[]
@@ -69,7 +69,7 @@ for f in fnames:
                 layer = decoder['layer'].value()
                 system = decoder["system"].value()
                 side = decoder["side"].value()
-                layers[system-1][layer*(1+(side==1))]+=1
+                layers[system-1][layer*(1+((side==1)&(system==2))*8+((side==1)&(system==4))*7)+((side==1)&(system==6))*4]+=1
 reader.close()
 
 #Normalizing to being per event
@@ -77,6 +77,7 @@ for num, i in enumerate(layNum):
     for j in range(i):
         layers[num][j]=layers[num][j]/numEvents
 
+#Outputting file to a json
 output_json = options.outFile+".json"
 with open(output_json, 'w') as fp:
             json.dump(layers, fp)
