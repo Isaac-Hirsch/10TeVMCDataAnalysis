@@ -13,7 +13,7 @@ parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
 parser.add_option('-o', '--outFile', help='--outFile hitsPerLayer',
-                  type=str, default='noBIBEndcapAnalysis')
+                  type=str, default='BIBEndcapAnalysis')
 (options, args) = parser.parse_args()
 
 
@@ -145,4 +145,4 @@ output={
 
 output_json = options.outFile+".json"
 with open(output_json, 'w') as fp:
-            json.dump(output, fp)
+    json.dump(output, fp)
