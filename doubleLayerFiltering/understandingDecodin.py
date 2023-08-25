@@ -78,7 +78,7 @@ for f in fnames:
         #creating a decoder that will be used layer to trace a hit back to its system and layer
         encoding=tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder=UTIL.BitField64(encoding)
-        for hit in event.getCollection(tracksCollection):
+        for hit in tracksCollection:
             pseudo=hit.getPositionVec().PseudoRapidity()
             if pseudo > maxPseudo:
                 maxPseudo=pseudo
