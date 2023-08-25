@@ -64,8 +64,6 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #Hashing the hit into the correct bins
-                print("Pseudo:" + str(int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)))
-                print("Phi:" + str(int(((np.pi+phi)*nPhi)/(2*np.pi))))
                 sorting[int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
 
@@ -118,6 +116,9 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
+                print("Hash:" + str(int(layer/2+4*(side==1))))
+                print("Pseudo:" + str(int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)))
+                print("Phi:" + str(int(((np.pi+phi)*nPhi)/(2*np.pi))))
                 sorting[int(layer/2+4*(side==1))][int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
