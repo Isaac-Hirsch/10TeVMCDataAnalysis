@@ -84,4 +84,5 @@ for f in fnames:
                 maxPseudo=pseudo
             elif pseudo < minPseudo:
                 minPseudo=pseudo
-    
+print("min pseudo:" + minPseudo)
+print("max pseudo:" + maxPseudo)
