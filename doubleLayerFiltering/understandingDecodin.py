@@ -17,7 +17,7 @@ parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.roo
 
 tree = TTree("tracks_tree", "tracks_tree")
 
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2000.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[12]00.slcio")
 
 collections=[
     "AllTracks",
@@ -65,6 +65,8 @@ collections=[
     "YokeEndcapCollection"
     ]
 
+maxPseudo=0
+minPseudo=0
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
@@ -72,32 +74,14 @@ for f in fnames:
     for event in reader:
 
         #Looking at the only doublet layer in the vertex barrel
-        tracksCollection = event.getCollection("VBTrackerHits")
+        tracksCollection = event.getCollection("VETrackerHits")
         #creating a decoder that will be used layer to trace a hit back to its system and layer
         encoding=tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder=UTIL.BitField64(encoding)
         for hit in event.getCollection(tracksCollection):
-            print(dir(hit.getPositionVec))
-
-
-methods=[]
-
-i=0
-for f in fnames:
-    reader = IOIMPL.LCFactory.getInstance().createLCReader()
-    reader.open(f)
-    for event in reader:
-        print("NEW EVENT"+str(i))
-        i+=1
-        for collection in collections:
-            tracksCollection = event.getCollection(collection)
-            encoding = tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
-            decoder = UTIL.BitField64(encoding)
-            SiTracks=event.getCollection("SiTracks")
-            tracks =[i for i in SiTracks]
-            hits = [i for i in tracks[0].getTrackerHits()]
-            print(collection + ":")
-            for hit in hits:
-                cellID = int(hit.getCellID0())
-                decoder.setValue(cellID)
-                print(decoder.valueString())
+            pseudo=hit.getPositionVec().PseudoRapidity()
+            if pseudo > maxPseudo:
+                maxPseudo=pseudo
+            elif pseudo < minPseudo:
+                minPseudo=pseudo
+    
