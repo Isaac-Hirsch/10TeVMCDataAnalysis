@@ -92,7 +92,7 @@ for f in fnames:
                 deltaR[0].append(minRad)
                 
             else:
-                nBox[1+pixel]+=1
+                nBox[0]+=1
                 
         #Reseting sorting function
         sorting=[]
