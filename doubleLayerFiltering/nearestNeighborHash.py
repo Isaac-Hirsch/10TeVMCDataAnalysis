@@ -116,9 +116,6 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
-                print("Hash:" + str(int(layer/2+4*(side==1))))
-                print("Pseudo:" + str(int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)))
-                print("Phi:" + str(int(((np.pi+phi)*nPhi)/(2*np.pi))))
                 sorting[int(layer/2+4*(side==1))][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
@@ -126,27 +123,27 @@ for f in fnames:
                 #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
-            for (psuedoRap,phi, pixel) in firstLayerHit:
-                #Navive search to be fixed later
-                #Pixel represents the endcap hash we should be looking at
-                box=sorting[pixel][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
-                if len(box) !=0:
-                    minPseudo=box[0][0]
-                    minPhi=box[0][1]
-                    minRad=np.sqrt(minPseudo**2+minPhi**2)
-                    for (boxPseduo, boxPhi) in box[1:]:
-                        boxRad=np.sqrt(boxPseduo**2+boxPhi**2)
-                        if minRad > boxRad:
-                            minRad=boxRad
-                            minPhi=boxPhi
-                            minPseudo=boxPseduo
-                    #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
-                    deltaPseudo[1+pixel].append(minPseudo)
-                    deltaPhi[1+pixel].append(minPhi)
-                    deltaR[1+pixel].append(minRad)
-                
-                else:
-                    nBox[pixel+1]+=1
+        for (psuedoRap,phi, pixel) in firstLayerHit:
+            #Navive search to be fixed later
+            #Pixel represents the endcap hash we should be looking at
+            box=sorting[pixel][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
+            if len(box) !=0:
+                minPseudo=box[0][0]
+                minPhi=box[0][1]
+                minRad=np.sqrt(minPseudo**2+minPhi**2)
+                for (boxPseduo, boxPhi) in box[1:]:
+                    boxRad=np.sqrt(boxPseduo**2+boxPhi**2)
+                    if minRad > boxRad:
+                        minRad=boxRad
+                        minPhi=boxPhi
+                        minPseudo=boxPseduo
+                #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
+                deltaPseudo[1+pixel].append(minPseudo)
+                deltaPhi[1+pixel].append(minPhi)
+                deltaR[1+pixel].append(minRad)
+            
+            else:
+                nBox[pixel+1]+=1
 
 #Wrapping data into a dictionary that will be exported as a json
 output={
