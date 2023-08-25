@@ -46,14 +46,14 @@ for f in fnames:
                 sorting[i].append([])
 
         #Looking at the only doublet layer in the vertex barrel
-        tracksCollection = event.getCollection("VBTrackerHits")
+        hitsCollection = event.getCollection("VBTrackerHits")
         #creating a decoder that will be used layer to trace a hit back to its system and layer
-        encoding=tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        encoding=hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder=UTIL.BitField64(encoding)
 
         firstLayerHit=[]
 
-        for hit in tracksCollection:
+        for hit in hitsCollection:
             #Decoder
             cellID = int(hit.getCellID0())
             decoder.setValue(cellID)
@@ -104,10 +104,10 @@ for f in fnames:
                     sorting[j][i].append([])
         
         #Looking at the four doublet layer in the vertex endcaps
-        tracksCollection = event.getCollection("VETrackerHits")
+        hitsCollection = event.getCollection("VETrackerHits")
         firstLayerHit=[]
 
-        for hit in event.getCollection(tracksCollection):
+        for hit in hitsCollection:
             #Decoder
             cellID = int(hit.getCellID0())
             decoder.setValue(cellID)
