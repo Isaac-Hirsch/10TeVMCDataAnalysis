@@ -64,7 +64,7 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #Hashing the hit into the correct bins
-                sorting[0][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((pseudoRapidity,phi))
+                sorting[0][int(((2.2+pseudoRapidity)*nPseudoRap)//4.4)][int(((np.pi+phi)*nPhi)//(2*np.pi))].append((pseudoRapidity,phi))
 
 
             elif layer==0:
@@ -73,7 +73,7 @@ for f in fnames:
         #Run through every hit in the first layer of the doublet and find its nearest neighbor in terms of delta R on the second layer
         for (pseudoRap,phi) in firstLayerHit:
             #Navive search to be fixed later. Does not work well if the nearest neighbor is not in the same box the hit is in.
-            box=sorting[((2.2+pseudoRap)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)]
+            box=sorting[int(((2.2+pseudoRap)*nPseudoRap)//4.4)][int(((np.pi+phi)*nPhi)//(2*np.pi))]
             #Checking if there is anything in the box, if not its skipped and added to nBox which is a measure of how good of an approximation searching 1 box is
             if len(box) !=0:
                 minPseudo=box[0][0]
@@ -116,17 +116,17 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer//2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
-                sorting[layer//2+4*(side==1)][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((pseudoRapidity,phi))
+                sorting[int(layer//2+4*(side==1))][int(((2.2+pseudoRapidity)*nPseudoRap)//4.4)][int(((np.pi+phi)*nPhi)//(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
             else:
                 #layer//2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
-                firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),layer//2+4*(side==1)))
+                firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer//2+4*(side==1))))
 
             for (psuedoRap,phi, pixel) in firstLayerHit:
                 #Navive search to be fixed later
                 #Pixel represents the endcap hash we should be looking at
-                box=sorting[pixel][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)]
+                box=sorting[pixel][int(((2.2+pseudoRapidity)*nPseudoRap)//4.4)][int(((np.pi+phi)*nPhi)//(2*np.pi))]
                 if len(box) !=0:
                     minPseudo=box[0][0]
                     minPhi=box[0][1]
