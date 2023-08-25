@@ -12,7 +12,7 @@ parser.add_option('-o', '--outFile', help='--outFile nearestPair',
 (options, args) = parser.parse_args()
 
 #Gather all the files you want to run over
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2??0.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[012]00.slcio")
 
 #Setting number of bins for the sorting function
 nPseudoRap=200
@@ -64,7 +64,7 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #Hashing the hit into the correct bins
-                sorting[0][((2.2+PseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((pseudoRapidity,phi))
+                sorting[0][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((pseudoRapidity,phi))
 
 
             elif layer==0:
@@ -113,10 +113,10 @@ for f in fnames:
             #Identifying any hit that is the second layer of any of the four doublets
             if (layer==1) | (layer==3) | (layer==5) | (layer==7):
                 side = decoder['side'].value()
-                PseudoRapidity=hit.getPositionVec().PseudoRapidity()
+                pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer//2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
-                sorting[layer//2+4*(side==1)][((2.2+PseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((PseudoRapidity,phi))
+                sorting[layer//2+4*(side==1)][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
             else:
@@ -126,7 +126,7 @@ for f in fnames:
             for (psuedoRap,phi, pixel) in firstLayerHit:
                 #Navive search to be fixed later
                 #Pixel represents the endcap hash we should be looking at
-                box=sorting[pixel][((2.2+PseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)]
+                box=sorting[pixel][((2.2+pseudoRapidity)*nPseudoRap)//4.4][((np.pi+phi)*nPhi)//(2*np.pi)]
                 if len(box) !=0:
                     minPseudo=box[0][0]
                     minPhi=box[0][1]
@@ -145,6 +145,7 @@ for f in fnames:
                 else:
                     nBox[pixel+1]+=1
 
+#Wrapping data into a dictionary that will be exported as a json
 output={
     "deltaPesudorapdity" : deltaPseudo,
     "deltaPhi" : deltaPhi,
