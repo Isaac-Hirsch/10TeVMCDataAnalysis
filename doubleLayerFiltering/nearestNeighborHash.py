@@ -121,6 +121,7 @@ for f in fnames:
             #All other hits are in the first layer of a doublet
             else:
                 #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
+                side = decoder['side'].value()
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
         for (psuedoRap,phi, pixel) in firstLayerHit:
