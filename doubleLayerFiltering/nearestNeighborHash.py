@@ -7,12 +7,12 @@ from pyLCIO import IOIMPL, EVENT, UTIL
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile nearestPair',
-                  type=str, default='nearestPair')
+parser.add_option('-o', '--outFile', help='--outFile nearestPair0NoBIB',
+                  type=str, default='nearestPair0NoBIB')
 (options, args) = parser.parse_args()
 
 #Gather all the files you want to run over
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[012]00.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
 
 #Setting number of bins for the sorting function
 nPseudoRap=200
