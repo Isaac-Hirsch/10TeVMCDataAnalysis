@@ -66,7 +66,7 @@ for f in fnames:
                 #Hashing the hit into the correct bins
                 print("Pseudo:" + str(int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)))
                 print("Phi:" + str(int(((np.pi+phi)*nPhi)/(2*np.pi))))
-                sorting[0][int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
+                sorting[int(((2.2+pseudoRapidity)*nPseudoRap)/4.4)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
 
             elif layer==0:
