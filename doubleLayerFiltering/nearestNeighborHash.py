@@ -150,7 +150,7 @@ for f in fnames:
                         minPhi=deltaPhiPos
                         minPseudo=deltaPseudoPos
                 #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
-                print("output: " +str(1+int(layer/2+4*(side==1))))
+                print("output: " +str(1+pixel))
                 deltaPseudo[1+pixel].append(minPseudo)
                 deltaPhi[1+pixel].append(minPhi)
                 deltaR[1+pixel].append(minRad)
