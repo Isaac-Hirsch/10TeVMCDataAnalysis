@@ -124,13 +124,11 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
-                print("If Input: "+str(int(layer/2+4*(side==1))))
                 sorting[int(layer/2+4*(side==1))][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
             else:
                 #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
-                print("Input: "+str(int(layer/2+4*(side==1))))
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
         for (pseudoRap,phi, pixel) in firstLayerHit:
@@ -150,13 +148,11 @@ for f in fnames:
                         minPhi=deltaPhiPos
                         minPseudo=deltaPseudoPos
                 #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
-                print("output: " +str(1+pixel))
                 deltaPseudo[1+pixel].append(minPseudo)
                 deltaPhi[1+pixel].append(minPhi)
                 deltaR[1+pixel].append(minRad)
             
             else:
-                print("box: " +str(1+pixel))
                 nBox[pixel+1]+=1
 
 #Wrapping data into a dictionary that will be exported as a json
