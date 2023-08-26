@@ -133,10 +133,10 @@ for f in fnames:
                 print("Input: "+str(int(layer/2+4*(side==1))))
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
-        for (psuedoRap,phi, pixel) in firstLayerHit:
+        for (pseudoRap,phi, pixel) in firstLayerHit:
             #Navive search to be fixed later
             #Pixel represents the endcap hash we should be looking at
-            box=sorting[pixel][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
+            box=sorting[pixel][int(((2.4+pseudoRap)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
             if len(box) !=0:
                 minPseudo=np.abs(box[0][0]-pseudoRap)
                 minPhi=np.abs(box[0][1]-phi)
