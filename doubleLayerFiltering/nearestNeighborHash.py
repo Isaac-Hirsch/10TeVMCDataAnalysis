@@ -130,6 +130,7 @@ for f in fnames:
             else:
                 #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
                 side = decoder['side'].value()
+                print(int(layer/2+4*(side==1)))
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
         for (psuedoRap,phi, pixel) in firstLayerHit:
@@ -149,6 +150,7 @@ for f in fnames:
                         minPhi=deltaPhiPos
                         minPseudo=deltaPseudoPos
                 #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
+                print(1+int(layer/2+4*(side==1)))
                 deltaPseudo[1+pixel].append(minPseudo)
                 deltaPhi[1+pixel].append(minPhi)
                 deltaR[1+pixel].append(minRad)
