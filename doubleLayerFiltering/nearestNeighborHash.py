@@ -118,9 +118,9 @@ for f in fnames:
             cellID = int(hit.getCellID0())
             decoder.setValue(cellID)
             layer = decoder['layer'].value()
+            side = decoder['side'].value()
             #Identifying any hit that is the second layer of any of the four doublets
             if (layer==1) | (layer==3) | (layer==5) | (layer==7):
-                side = decoder['side'].value()
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
@@ -129,7 +129,6 @@ for f in fnames:
             #All other hits are in the first layer of a doublet
             else:
                 #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
-                side = decoder['side'].value()
                 print("Input: "+str(int(layer/2+4*(side==1))))
                 firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
 
@@ -156,6 +155,7 @@ for f in fnames:
                 deltaR[1+pixel].append(minRad)
             
             else:
+                print("box: " +str(1+pixel))
                 nBox[pixel+1]+=1
 
 #Wrapping data into a dictionary that will be exported as a json
