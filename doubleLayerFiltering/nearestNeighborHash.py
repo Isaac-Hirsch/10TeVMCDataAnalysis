@@ -124,6 +124,7 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
+                print("If Input: "+str(int(layer/2+4*(side==1))))
                 sorting[int(layer/2+4*(side==1))][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
