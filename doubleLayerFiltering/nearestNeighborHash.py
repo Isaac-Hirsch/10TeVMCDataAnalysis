@@ -7,8 +7,8 @@ from pyLCIO import IOIMPL, EVENT, UTIL
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile nearestPair0NoBIB',
-                  type=str, default='nearestPair0NoBIB')
+parser.add_option('-o', '--outFile', help='--outFile nearestPairBIB',
+                  type=str, default='nearestPairBIB')
 (options, args) = parser.parse_args()
 
 #Gather all the files you want to run over.
