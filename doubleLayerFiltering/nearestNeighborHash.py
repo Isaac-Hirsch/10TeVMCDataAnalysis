@@ -7,18 +7,18 @@ from pyLCIO import IOIMPL, EVENT, UTIL
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile nearestPairBIB',
-                  type=str, default='nearestPairBIB')
+parser.add_option('-o', '--outFile', help='--outFile nearestPair0NoBIB',
+                  type=str, default='nearestPair0NoBIB')
 (options, args) = parser.parse_args()
 
 #Gather all the files you want to run over.
 #Comment out all but 1 fnames
 #BIB
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[123]00.slcio")
+#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[123]00.slcio")
 #0-50 pt muons
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_[123]??0.slcio")
 #250-1000 pt muons
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_*.slcio")
+#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_[456]??0.slcio")
 
 #Setting number of bins for the sorting function
 nPseudoRap=50
