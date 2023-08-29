@@ -26,8 +26,8 @@ nPseudoRap=200
 #Phi spans -pi to pi
 nPhi=200
 
-class depthFirstSearch(object):
-    #Object for depth-first search to find the nearest hit in boxes to a point.
+class breadthFirstSearch(object):
+    #Object for breadth-first search to find the nearest hit in boxes to a point.
     def __init__(self, boxes : list, points : list):
         #Boxes should be a list of lists of hits on the second doublet layer where the first list represents the pseudo hash and the second represents the phi hash
         #Points should be a list of 2 length tuples that represent all hits on the first doublet layer. The first element of the tuple should be pseudorapidity and the second should be phi
@@ -50,7 +50,7 @@ class depthFirstSearch(object):
         for pseudo, phi in self.points:
             assert type(pseudo)==float, "the first element in a point is the wrong type. It is a " + str(type(pseudo))
             assert type(phi)==float, "the second element in a point is the wrong type. It is a " + str(type(phi))
-            #Starting a priority queue for depth first search and intializing the current box the hit is in as the first seach
+            #Starting a priority queue for breadth first search and intializing the current box the hit is in as the first seach
             #All of the queues are synced so that indexing the nth index of all of them returns info on the same box
             #If this version is too slow or takes up too much memory, you can change it such that the search removes items from the queue after it looks at them
             pseudoIndex=int(((2.4+pseudo)*nPseudoRap)/4.8)
@@ -147,6 +147,10 @@ class depthFirstSearch(object):
         else:
             return False
 
+
+
+
+
 #Creating output data storage
 deltaPseudo=[]
 deltaPhi=[]
@@ -222,10 +226,15 @@ for f in fnames:
             nHoles[-1][0]=2
         elif noHits[0] or  noHits[1]:
             nHoles[-1][0]=1
-        #Run through every hit in the first layer of the doublet and find its nearest neighbor in terms of delta R on the second layer using depth-first search
+        #Run through every hit in the first layer of the doublet and find its nearest neighbor in terms of delta R on the second layer using breadth-first search
         else:
-            barrelSearch=depthFirstSearch(sorting,firstLayerHit)
+            barrelSearch=breadthFirstSearch(sorting,firstLayerHit)
             deltaR[-1][0], deltaPseudo[-1][0], deltaPhi[-1][0] = barrelSearch.search()
+
+
+
+
+
 
         #Below code repeats the above process for the endcaps
                 
@@ -272,15 +281,19 @@ for f in fnames:
                     noHits[index][1]=False
                 firstLayerHit[int(layer/2+4*(side==1))].append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi()))
 
-        #Run through every hit in the first layer of each doublet and find its nearest neighbor in terms of delta R on the second layer using depth-first search    
+        #Run through every hit in the first layer of each doublet and find its nearest neighbor in terms of delta R on the second layer using breadth-first search    
         for i in range(8):
             if noHits[i][0] and noHits[i][1]:
                 nHoles[-1][1+i]=2
             elif noHits[i][0] or noHits[i][1]:
                 nHoles[-1][1+i]=1
             else:
-                endcapSearch=depthFirstSearch(sorting[i],firstLayerHit[i])
+                endcapSearch=breadthFirstSearch(sorting[i],firstLayerHit[i])
                 deltaR[-1][i+1], deltaPseudo[-1][i+1], deltaPhi[-1][i+1] = endcapSearch.search()
+
+
+
+
 
 #Wrapping data into a dictionary that will be exported as a json
 output={
