@@ -37,6 +37,8 @@ class depthFirstSearch(object):
         #the point on the first layer of the doublet we are trying to find the nearest hit to
 
     def search(self):
+        output=[]
+        #Loop over all hits on the first doublet layer to find each of their closest points
         for pseudo, phi in self.points:
             #Starting a priority queue for depth first search and intializing the current box the hit is in as the first seach
             #All of the queues are synced so that indexing the nth index of all of them returns info on the same box
@@ -54,7 +56,6 @@ class depthFirstSearch(object):
             #repeatDict is a dictionary of all the steps that will remember if we haev already searched a box
             #keys will be tuples (phiSteps, pseudoSteps)
             repeatDict={(0,0)}
-
             #Searching through priority queue until we can guarentee we have found that closest point
             i=0
             minR=float('inf')
@@ -62,33 +63,50 @@ class depthFirstSearch(object):
             minPseudo=float('inf')
             #While loop will stop as soon as the box with the closest possible point is farther then the closests point we already found
             while RQueue[i] < minR:
+                #Look through the next element in the queue for the closest hit to our point
                 boxResult=self.searchBox(boxQueue[i])
+                #If there is atleast 1 hit in the box, check if its the closest we have found so far
                 if boxResult:
                     if boxResult[0] < minR:
                         minR=boxResult[0]
                         minPseudo=boxResult[1]
                         minPhi=boxResult[2]
-                for phiStep in (-1,1):
+                #Add appropriate neighboring boxes to the priority queue
+                for pseudoStep, phiStep in ((-1,0),(1,0),(0,-1),(0,1)):
+                    #calculate total steps from the original box the point would have been in
                     totPhiSteps=phiStepsQueue[i]+phiStep
-                    for pseudoStep in (-1,1):
-                        totPseudoSteps=pseudoStepsQue[i]+pseudoStep
-                        if not ((totPhiSteps,totPseudoSteps) in repeatDict):
+                    totPseudoSteps=pseudoStepsQue[i]+pseudoStep
+                    #require the next box to be one we have not seen before and to within out psuedo and phi bounds
+                    if (not ((totPhiSteps,totPseudoSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.4/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
+                        #Add the box to the list of boxes we have already seen
+                        repeatDict[(totPhiSteps,totPseudoSteps)]=True
+                        #Calculate the nearest possible R
+                        if totPseudoSteps==0:
+                            deltaMinPseudo=0
+                        elif totPseudoSteps<0:
+                            deltaMinPseudo= (2.4+pseudo)%(4.8*nPseudoRap)+(-totPseudoSteps+1)*4.8/nPseudoRap
+                        else:
+                            deltaMinPseudo= -(2.4+pseudo)%(4.8*nPseudoRap)+totPseudoSteps*4.8/nPseudoRap
+                        if totPhiSteps==0:
                             deltaMinPhi=0
-                            deltaMinR=0
-                            if totPseudoSteps==0:
-                                deltaMinPseudo=0
-                            elif totPseudoSteps<0:
-                                deltaMinPseudo=((2.4+pseudo)*nPseudoRap/4.8-pseudoIndex)/nPseudoRap+(-totPseudoSteps+1)*4.8/nPseudoRap
-                            else:
-                                deltaMinPseudo=-((2.4+pseudo)*nPseudoRap/4.8-pseudoIndex)/nPseudoRap+totPseudoSteps*4.8/nPseudoRap
-                            if totPhiSteps==0:
-                                deltaMinPhi=0
-                            elif totPhiSteps<0:
-                                deltaMinPhi=((np.pi+phi)*nPhi/(2*np.pi)-phiIndex)/nPhi+(-totPhiSteps+1)*2*np.pi/nPhi
-                            else:
-                                deltaMinPhi=-((np.pi+phi)*nPhi/(2*np.pi)-phiIndex)/nPhi+totPhiSteps*2*np.pi/nPhi
-                    
-
+                        elif totPhiSteps<0:
+                            deltaMinPhi=((np.pi+phi)%(2*np.pi*nPhi))+(-totPhiSteps+1)*2*np.pi/nPhi
+                        else:
+                            deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+totPhiSteps*2*np.pi/nPhi
+                        deltaMinR=np.sqrt(deltaMinPhi**2+deltaMinPseudo**2)
+                        #check whether the box might contain the closest point
+                        if deltaMinR < minR:
+                            #Find where to insert it in sorted RQueue array and then assert all the other values in the same location in the other arrays
+                            for j in range(len(RQueue)-i):
+                                if RQueue[-j] < deltaMinR:
+                                    RQueue.insert(-j, deltaMinR)
+                                    boxQueue.insert(-j,self.boxes[pseudoIndex + totPseudoSteps][phiIndex+totPhiSteps])
+                                    phiStepsQueue.insert(-j,totPhiSteps)
+                                    pseudoStepsQue.insert(-j,totPseudoSteps)
+                                    break
+                i+=1
+            output.append(minR, minPseudo, minPhi)  
+        return output      
 
     def searchBox(self, box, pseudo,phi):
         if len(box):
