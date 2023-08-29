@@ -44,7 +44,8 @@ class depthFirstSearch(object):
 
     def search(self)-> list:
         #Searches for the nearest hit in box for all points, returns a list of tuples (delta R,delta prseudorapditity, delta phi)
-        output=[]
+        #Ouput stores the final delta R values in the first list, the final delta pseudorapidity in the second list, and the final delta phi in the last list
+        output=[[],[],[]]
         #Loop over all hits on the first doublet layer to find each of their closest points
         for pseudo, phi in self.points:
             assert type(pseudo)==float, "the first element in a point is the wrong type. It is a " + str(type(pseudo))
@@ -75,7 +76,7 @@ class depthFirstSearch(object):
             while RQueue[i] < minR:
                 #Look through the next element in the queue for the closest hit to our point
                 boxResult=self.searchBox(boxQueue[i])
-                #If there is atleast 1 hit in the box, check if its the closest we have found so far
+                #If there is at least 1 hit in the box, check if its the closest we have found so far
                 if boxResult:
                     if boxResult[0] < minR:
                         minR=boxResult[0]
@@ -117,12 +118,14 @@ class depthFirstSearch(object):
                                     pseudoStepsQue.insert(RLen-j,totPseudoSteps)
                                     break
                 i+=1
-            output.append((minR, minPseudo, minPhi))  
+            output[0].append(minR)  
+            output[1].append(minPseudo)
+            output[2].append(minPhi)
         return output      
 
     def searchBox(self, box: list, pseudo: float,phi: float):
         #Searches a box for the nearest hit in delta R to (pseudo, phi)
-        #If the box is empty it returns false, otherwise it returns (minR,minPseudo,minPhi) of the closest hit
+        #If the box is empty it returns False, otherwise it returns (minR,minPseudo,minPhi) of the closest hit
         if len(box):
             assert len(box[0])==2, "a box has a hit of the wrong size. It is size " + str(len(box[0]))
             assert type(box[0][0])==float, "the first element of a hit in a box is the wrong type. It is a " + str(type(box[0][0]))
@@ -148,20 +151,34 @@ class depthFirstSearch(object):
 deltaPseudo=[]
 deltaPhi=[]
 deltaR=[]
-nBox=[]
-#Filling them with the correct number and dimension of empty lists
-for i in range(9):
-    deltaPseudo.append([])
-    deltaPhi.append([])
-    deltaR.append([])
-    nBox.append(0)
+#nHoles stores a 0 if there is a hit (or hits) on both sides of a doublet layer, 1 if theres a hit on only 1 side of the doublet layer, and 2 if there are hits on both
+nHoles=[]
 
+#Loop over every file
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
 
-    #Loop over events
+    #Loop over events in the file
     for event in reader:
+        #Adding a list to store data for this particular event to each variable
+        deltaPseudo.append([])
+        deltaPhi.append([])
+        deltaR.append([])
+        nHoles.append([])
+        for i in range(9):
+            deltaPseudo[-1].append([])
+            deltaPhi[-1].append([])
+            deltaR[-1].append([])
+            nHoles[-1].append(0)
+
+        #The below code searches over the vertex barrel
+
+        #Accessing the collection of all digitized hits in the barrel
+        hitsCollection = event.getCollection("VBTrackerHits")
+        #creating a decoder that will be used layer to trace a hit back to its system and layer
+        encoding=hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        decoder=UTIL.BitField64(encoding)
 
         #Creating bins to sort hits from the second layer into.
         #The Pseudonapidity spans -2.4 to 2.4 and is split into nPsuedoRap evenly sized bins
@@ -171,15 +188,12 @@ for f in fnames:
             sorting.append([])
             for k in range(nPhi):
                 sorting[i].append([])
+        #Calculating if there is at least 1 hit in both layers. If its only 1, well record a hole
+        noHits=[True,True]
 
-        #Looking at the only doublet layer in the vertex barrel
-        hitsCollection = event.getCollection("VBTrackerHits")
-        #creating a decoder that will be used layer to trace a hit back to its system and layer
-        encoding=hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
-        decoder=UTIL.BitField64(encoding)
+        firstLayerHit=[]
 
-        firstLayerHit=[[],[]]
-
+        #Looping over all hits in the collection
         for hit in hitsCollection:
             #Decoder
             cellID = int(hit.getCellID0())
@@ -188,101 +202,92 @@ for f in fnames:
             
             #This is the second layer of the only vertex barrel doublet
             if layer==1:
+                #Checking if we have found at least 1 hit in this layer
+                if noHits[0]:
+                    noHits[0]=False
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #Hashing the hit into the correct bins
                 sorting[int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
-
+            #Adding hits from the first doublet layer to a list so we can find their closest pairs later
             elif layer==0:
-                firstLayerHit[0].append(hit.getPositionVec().PseudoRapidity())
-                firstLayerHit[1].append(hit.getPositionVec().Phi())
+                #Checking if we have found at least 1 hit in this layer
+                if noHits[1]:
+                    noHits[1]=False
+                firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi()))
         
-        #Run through every hit in the first layer of the doublet and find its nearest neighbor in terms of delta R on the second layer
-        for (pseudoRap,phi) in firstLayerHit:
-            #Navive search to be fixed later. Does not work well if the nearest neighbor is not in the same box the hit is in.
-            box=sorting[int(((2.4+pseudoRap)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
-            #Checking if there is anything in the box, if not its skipped and added to nBox which is a measure of how good of an approximation searching 1 box is
-            if len(box) !=0:
-                minPseudo=np.abs(box[0][0]-pseudoRap)
-                minPhi=np.abs(box[0][1]-phi)
-                minRad=np.sqrt(minPseudo**2+minPhi**2)
-                for (boxPseduo, boxPhi) in box[1:]:
-                    deltaPseudoPos=np.abs(boxPseduo-pseudoRap)
-                    deltaPhiPos=np.abs(boxPhi-phi)
-                    deltaRadPos=np.sqrt(deltaPseudoPos**2+deltaPhiPos**2)
-                    if minRad > deltaRadPos:
-                        minRad=deltaRadPos
-                        minPhi=deltaPhiPos
-                        minPseudo=deltaPseudoPos
-                deltaPseudo[0].append(minPseudo)
-                deltaPhi[0].append(minPhi)
-                deltaR[0].append(minRad)
-                
-            else:
-                nBox[0]+=1
-                
-        #Reseting sorting function
-        sorting=[]
-        for j in range(8):
-            sorting.append([])
-            for i in range(nPseudoRap):
-                sorting[j].append([])
-                for k in range(nPhi):
-                    sorting[j][i].append([])
-        
-        #Looking at the four doublet layer in the vertex endcaps
-        hitsCollection = event.getCollection("VETrackerHits")
-        firstLayerHit=[]
+        #Checking if their is at least 1 hit on both layers of the doublet
+        if noHits[0] and  noHits[1]:
+            nHoles[-1][0]=2
+        elif noHits[0] or  noHits[1]:
+            nHoles[-1][0]=1
+        #Run through every hit in the first layer of the doublet and find its nearest neighbor in terms of delta R on the second layer using depth-first search
+        else:
+            barrelSearch=depthFirstSearch(sorting,firstLayerHit)
+            deltaR[-1][0], deltaPseudo[-1][0], deltaPhi[-1][0] = barrelSearch.search()
 
+        #Below code repeats the above process for the endcaps
+                
+        #Accessing data for the four doublet layer in the vertex endcaps
+        hitsCollection = event.getCollection("VETrackerHits")
+
+        #Reseting sorting function and firstLayerHit
+        sorting=[]
+        firstLayerHit=[]
+        #Calculating if there is at least 1 hit in each 2nd doublet layer. If not, then the event has a hole on that doublet layer
+        noHits=[]
+        #Appending a list for each endcap doublet. index 0-3 are the -z endcaps from innermost to outer most and 4-7 are the +z endcaps also starting with innermost
+        for i in range(8):
+            sorting.append([])
+            firstLayerHit.append([])
+            noHits.append([True,True])
+            for j in range(nPseudoRap):
+                sorting[i].append([])
+                for k in range(nPhi):
+                    sorting[i][j].append([])
+
+        #Looping over all hits in the collection
         for hit in hitsCollection:
             #Decoder
             cellID = int(hit.getCellID0())
             decoder.setValue(cellID)
             layer = decoder['layer'].value()
             side = decoder['side'].value()
+            #layer/2+4*(side==1) uniquely hashes each doublet endcap into a value of 0-7 (but both layers from the same doublet have the same index)
+            index=int(layer/2+4*(side==1))
             #Identifying any hit that is the second layer of any of the four doublets
             if (layer==1) | (layer==3) | (layer==5) | (layer==7):
+                #Checking if there is at least 1 hit in this layer
+                if noHits[index][0]:
+                    noHits[index][0]=False
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
-                #layer/2+4*(side==1) uniquely hashes each outer doublet endcap into a value of 0-7
-                sorting[int(layer/2+4*(side==1))][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
+                sorting[index][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
             else:
-                #layer/2+4*(side==1) uniquely hashes each inner doublet endcap into a value of 0-7
-                firstLayerHit.append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi(),int(layer/2+4*(side==1))))
+                #Checking if there is at least 1 hit in this layer
+                if noHits[index][1]:
+                    noHits[index][1]=False
+                firstLayerHit[int(layer/2+4*(side==1))].append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi()))
 
-        for (pseudoRap,phi, pixel) in firstLayerHit:
-            #Navive search to be fixed later
-            #Pixel represents the endcap hash we should be looking at
-            box=sorting[pixel][int(((2.4+pseudoRap)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))]
-            if len(box) !=0:
-                minPseudo=np.abs(box[0][0]-pseudoRap)
-                minPhi=np.abs(box[0][1]-phi)
-                minRad=np.sqrt(minPseudo**2+minPhi**2)
-                for (boxPseduo, boxPhi) in box[1:]:
-                    deltaPseudoPos=np.abs(boxPseduo-pseudoRap)
-                    deltaPhiPos=np.abs(boxPhi-phi)
-                    deltaRadPos=np.sqrt(deltaPseudoPos**2+deltaPhiPos**2)
-                    if minRad > deltaRadPos:
-                        minRad=deltaRadPos
-                        minPhi=deltaPhiPos
-                        minPseudo=deltaPseudoPos
-                #Add one to hash in delta{} because they need to account for the barrel doublet in the first spot
-                deltaPseudo[1+pixel].append(minPseudo)
-                deltaPhi[1+pixel].append(minPhi)
-                deltaR[1+pixel].append(minRad)
-            
+        #Run through every hit in the first layer of each doublet and find its nearest neighbor in terms of delta R on the second layer using depth-first search    
+        for i in range(8):
+            if noHits[i][0] and noHits[i][1]:
+                nHoles[-1][1+i]=2
+            elif noHits[i][0] or noHits[i][1]:
+                nHoles[-1][1+i]=1
             else:
-                nBox[pixel+1]+=1
+                endcapSearch=depthFirstSearch(sorting[i],firstLayerHit[i])
+                deltaR[-1][i+1], deltaPseudo[-1][i+1], deltaPhi[-1][i+1] = endcapSearch.search()
 
 #Wrapping data into a dictionary that will be exported as a json
 output={
     "deltaPesudorapdity" : deltaPseudo,
     "deltaPhi" : deltaPhi,
     "deltaR" : deltaR,
-    "emptyBoxes" : nBox
+    "nHoles" : nHoles
 }
 
 output_json = options.outFile+".json"
