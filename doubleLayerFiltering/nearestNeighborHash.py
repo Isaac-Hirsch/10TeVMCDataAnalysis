@@ -66,7 +66,7 @@ class breadthFirstSearch(object):
             pseudoStepsQue=[0]
             #repeatDict is a dictionary of all the steps already searched and will be used to remember if we have already searched a box
             #keys will be tuples (pseudoSteps, phiSteps)
-            repeatDict={(0,0)}
+            repeatDict={(0,0) : True}
             #Searching through priority queue until we can guarentee we have found that closest point
             i=0
             minR=float('inf')
