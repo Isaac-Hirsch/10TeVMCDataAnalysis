@@ -57,8 +57,8 @@ class breadthFirstSearch(object):
             #Starting a priority queue for breadth first search and intializing the current box the hit is in as the first seach
             #All of the queues are synced so that indexing the nth index of all of them returns info on the same box
             #If this version is too slow or takes up too much memory, you can change it such that the search removes items from the queue after it looks at them
-            pseudoIndex=int(((2.4+pseudo)*nPseudoRap)/4.8)
-            phiIndex=int(((np.pi+phi)*nPhi)/(2*np.pi))
+            pseudoIndex=int(((pseudo-startPseudo)*nPseudoRap)/(endPseudo-startPseudo))
+            phiIndex=int(((phi-startPhi)*nPhi)/(endPhi-startPhi))
             boxQueue=[self.boxes[pseudoIndex][phiIndex]]
             RQueue=[0]
             #Keep track of the steps to get to each box from the point
@@ -92,22 +92,22 @@ class breadthFirstSearch(object):
                     totPhiSteps=phiStepsQueue[i]+phiStep
                     totPseudoSteps=pseudoStepsQue[i]+pseudoStep
                     #require the next box to be one we have not seen before and to within out psuedo and phi bounds
-                    if (not ((totPseudoSteps,totPhiSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.8/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
+                    if (not ((totPseudoSteps,totPhiSteps) in repeatDict)) & ((pseudo+totPseudoSteps*(endPhi-startPhi)/nPseudoRap) > startPseudo) & ((pseudo+totPseudoSteps*(endPhi-startPhi)/nPseudoRap) < endPseudo) & ((phi + totPhiSteps*(endPhi-startPhi)/nPhi) >= startPhi) & ((phi + totPhiSteps*(endPhi-startPhi)/nPhi) <= endPhi):
                         #Add the box to the list of boxes we have already seen
                         repeatDict[(totPseudoSteps, totPhiSteps)]=True
                         #Calculate the nearest possible R
                         if totPseudoSteps==0:
                             deltaMinPseudo=0
                         elif totPseudoSteps<0:
-                            deltaMinPseudo= -((2.4+pseudo)%(4.8/nPseudoRap))+(totPseudoSteps+1)*4.8/nPseudoRap
+                            deltaMinPseudo= -((pseudo-startPseudo)%((endPseudo-startPseudo)/nPseudoRap))+(totPseudoSteps+1)*(endPseudo-startPseudo)/nPseudoRap
                         else:
-                            deltaMinPseudo= -((2.4+pseudo)%(4.8/nPseudoRap))+totPseudoSteps*4.8/nPseudoRap
+                            deltaMinPseudo= -((pseudo-startPseudo)%((endPseudo-startPseudo)/nPseudoRap))+totPseudoSteps*(endPseudo-startPseudo)/nPseudoRap
                         if totPhiSteps==0:
                             deltaMinPhi=0
                         elif totPhiSteps<0:
-                            deltaMinPhi= -((np.pi+phi)%(2*np.pi/nPhi))+(totPhiSteps+1)*2*np.pi/nPhi
+                            deltaMinPhi= -((phi-startPhi)%((endPhi-startPhi)/nPhi))+(totPhiSteps+1)*(endPhi-startPhi)/nPhi
                         else:
-                            deltaMinPhi= -((np.pi+phi)%(2*np.pi/nPhi))+totPhiSteps*2*np.pi/nPhi
+                            deltaMinPhi= -((phi-startPhi)%((endPhi-startPhi)/nPhi))+totPhiSteps*(endPhi-startPhi)/nPhi
                         deltaMinR=np.sqrt(deltaMinPhi**2+deltaMinPseudo**2)
                         #check whether the box might contain the closest point
                         if deltaMinR < minR:
@@ -218,7 +218,7 @@ for f in fnames:
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
                 #Hashing the hit into the correct bins
-                sorting[int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
+                sorting[int(((pseudoRapidity-startPseudo)*nPseudoRap)/(endPseudo-startPseudo))][int(((phi-startPhi)*nPhi)/(endPhi-startPhi))].append((pseudoRapidity,phi))
 
             #Adding hits from the first doublet layer to a list so we can find their closest pairs later
             elif layer==0:
@@ -278,7 +278,7 @@ for f in fnames:
                     noHits[index][0]=False
                 pseudoRapidity=hit.getPositionVec().PseudoRapidity()
                 phi=hit.getPositionVec().Phi()
-                sorting[index][int(((2.4+pseudoRapidity)*nPseudoRap)/4.8)][int(((np.pi+phi)*nPhi)/(2*np.pi))].append((pseudoRapidity,phi))
+                sorting[index][int(((pseudoRapidity-startPseudo)*nPseudoRap)/(endPseudo-startPseudo))][int(((phi-startPhi)*nPhi)/(endPhi-startPhi))].append((pseudoRapidity,phi))
 
             #All other hits are in the first layer of a doublet
             else:
