@@ -3,7 +3,6 @@ import glob
 from optparse import OptionParser
 import json
 from pyLCIO import IOIMPL, EVENT, UTIL
-from typing import List
 
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
@@ -29,7 +28,7 @@ nPhi=200
 
 class breadthFirstSearch(object):
     #Object for breadth-first search to find the nearest hit in boxes to a point.
-    def __init__(self, boxes: List, points: List):
+    def __init__(self, boxes: list, points: list):
         #Boxes should be a list of lists of hits on the second doublet layer where the first list represents the pseudo hash and the second represents the phi hash
         #Points should be a list of 2 length tuples that represent all hits on the first doublet layer. The first element of the tuple should be pseudorapidity and the second should be phi
         #Asserting boxes and points are the correct format
@@ -43,7 +42,7 @@ class breadthFirstSearch(object):
         self.boxes=boxes
         self.points=points
 
-    def search(self)-> List:
+    def search(self)-> list:
         #Searches for the nearest hit in box for all points, returns a list of tuples (delta R,delta prseudorapditity, delta phi)
         #Ouput stores the final delta R values in the first list, the final delta pseudorapidity in the second list, and the final delta phi in the last list
         output=[[],[],[]]
@@ -124,7 +123,7 @@ class breadthFirstSearch(object):
             output[2].append(minPhi)
         return output      
 
-    def searchBox(self, box: List, pseudo: float,phi: float):
+    def searchBox(self, box: list, pseudo: float,phi: float):
         #Searches a box for the nearest hit in delta R to (pseudo, phi)
         #If the box is empty it returns False, otherwise it returns (minR,minPseudo,minPhi) of the closest hit
         if len(box):
