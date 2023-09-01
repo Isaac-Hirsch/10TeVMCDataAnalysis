@@ -88,20 +88,20 @@ class breadthFirstSearch(object):
                     totPhiSteps=phiStepsQueue[i]+phiStep
                     totPseudoSteps=pseudoStepsQue[i]+pseudoStep
                     #require the next box to be one we have not seen before and to within out psuedo and phi bounds
-                    if (not ((totPhiSteps,totPseudoSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.4/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
+                    if (not ((totPhiSteps,totPseudoSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.8/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
                         #Add the box to the list of boxes we have already seen
                         repeatDict[(totPseudoSteps, totPhiSteps)]=True
                         #Calculate the nearest possible R
                         if totPseudoSteps==0:
                             deltaMinPseudo=0
                         elif totPseudoSteps<0:
-                            deltaMinPseudo= -(2.4+pseudo)%(4.8*nPseudoRap)+(-totPseudoSteps+1)*4.8/nPseudoRap
+                            deltaMinPseudo= -((2.4+pseudo)%(4.8*nPseudoRap))+(totPseudoSteps+1)*4.8/nPseudoRap
                         else:
-                            deltaMinPseudo= -(2.4+pseudo)%(4.8*nPseudoRap)+totPseudoSteps*4.8/nPseudoRap
+                            deltaMinPseudo= -((2.4+pseudo)%(4.8*nPseudoRap))+totPseudoSteps*4.8/nPseudoRap
                         if totPhiSteps==0:
                             deltaMinPhi=0
                         elif totPhiSteps<0:
-                            deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+(-totPhiSteps+1)*2*np.pi/nPhi
+                            deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+(totPhiSteps+1)*2*np.pi/nPhi
                         else:
                             deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+totPhiSteps*2*np.pi/nPhi
                         deltaMinR=np.sqrt(deltaMinPhi**2+deltaMinPseudo**2)
@@ -118,6 +118,8 @@ class breadthFirstSearch(object):
                                     pseudoStepsQue.insert(RLen-j,totPseudoSteps)
                                     break
                 i+=1
+                if len(RQueue)==i:
+                    break
             output[0].append(minR)  
             output[1].append(minPseudo)
             output[2].append(minPhi)
