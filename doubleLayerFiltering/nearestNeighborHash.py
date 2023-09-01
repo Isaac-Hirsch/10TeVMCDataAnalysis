@@ -14,7 +14,7 @@ parser.add_option('-o', '--outFile', help='--outFile nearestPairBIB',
 #Gather all the files you want to run over.
 #Comment out all but 1 fnames
 #BIB
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2??0.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2000.slcio")
 #0-50 pt muons
 #fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
 #250-1000 pt muons
@@ -28,7 +28,7 @@ nPhi=200
 
 class breadthFirstSearch(object):
     #Object for breadth-first search to find the nearest hit in boxes to a point.
-    def __init__(self, boxes : list, points : list):
+    def __init__(self, boxes: list, points: list):
         #Boxes should be a list of lists of hits on the second doublet layer where the first list represents the pseudo hash and the second represents the phi hash
         #Points should be a list of 2 length tuples that represent all hits on the first doublet layer. The first element of the tuple should be pseudorapidity and the second should be phi
         #Asserting boxes and points are the correct format
