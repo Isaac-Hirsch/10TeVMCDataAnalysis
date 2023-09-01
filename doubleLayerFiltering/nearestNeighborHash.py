@@ -75,7 +75,7 @@ class breadthFirstSearch(object):
             #While loop will stop as soon as the box with the closest possible point is farther then the closests point we already found
             while RQueue[i] < minR:
                 #Look through the next element in the queue for the closest hit to our point
-                boxResult=self.searchBox(boxQueue[i])
+                boxResult=self.searchBox(boxQueue[i], pseudo, phi)
                 #If there is at least 1 hit in the box, check if its the closest we have found so far
                 if boxResult:
                     if boxResult[0] < minR:
