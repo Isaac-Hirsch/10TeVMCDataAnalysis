@@ -22,9 +22,13 @@ fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50
 
 #Setting number of bins for the sorting function
 #Pseudorapditity spans -2.4 to 2.4
-nPseudoRap=200
+nPseudoRap=100
+startPseudo=-2.4
+endPseudo=2.4
 #Phi spans -pi to pi
-nPhi=200
+nPhi=100
+startPhi=-np.pi
+endPhi=np.pi
 
 class breadthFirstSearch(object):
     #Object for breadth-first search to find the nearest hit in boxes to a point.
@@ -95,15 +99,15 @@ class breadthFirstSearch(object):
                         if totPseudoSteps==0:
                             deltaMinPseudo=0
                         elif totPseudoSteps<0:
-                            deltaMinPseudo= -((2.4+pseudo)%(4.8*nPseudoRap))+(totPseudoSteps+1)*4.8/nPseudoRap
+                            deltaMinPseudo= -((2.4+pseudo)%(4.8/nPseudoRap))+(totPseudoSteps+1)*4.8/nPseudoRap
                         else:
-                            deltaMinPseudo= -((2.4+pseudo)%(4.8*nPseudoRap))+totPseudoSteps*4.8/nPseudoRap
+                            deltaMinPseudo= -((2.4+pseudo)%(4.8/nPseudoRap))+totPseudoSteps*4.8/nPseudoRap
                         if totPhiSteps==0:
                             deltaMinPhi=0
                         elif totPhiSteps<0:
-                            deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+(totPhiSteps+1)*2*np.pi/nPhi
+                            deltaMinPhi= -((np.pi+phi)%(2*np.pi/nPhi))+(totPhiSteps+1)*2*np.pi/nPhi
                         else:
-                            deltaMinPhi= -((np.pi+phi)%(2*np.pi*nPhi))+totPhiSteps*2*np.pi/nPhi
+                            deltaMinPhi= -((np.pi+phi)%(2*np.pi/nPhi))+totPhiSteps*2*np.pi/nPhi
                         deltaMinR=np.sqrt(deltaMinPhi**2+deltaMinPseudo**2)
                         #check whether the box might contain the closest point
                         if deltaMinR < minR:
@@ -281,7 +285,7 @@ for f in fnames:
                 #Checking if there is at least 1 hit in this layer
                 if noHits[index][1]:
                     noHits[index][1]=False
-                firstLayerHit[int(layer/2+4*(side==1))].append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi()))
+                firstLayerHit[index].append((hit.getPositionVec().PseudoRapidity(),hit.getPositionVec().Phi()))
 
         #Run through every hit in the first layer of each doublet and find its nearest neighbor in terms of delta R on the second layer using breadth-first search    
         for i in range(8):
