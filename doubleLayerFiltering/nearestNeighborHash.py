@@ -88,7 +88,7 @@ class breadthFirstSearch(object):
                     totPhiSteps=phiStepsQueue[i]+phiStep
                     totPseudoSteps=pseudoStepsQue[i]+pseudoStep
                     #require the next box to be one we have not seen before and to within out psuedo and phi bounds
-                    if (not ((totPhiSteps,totPseudoSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.8/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
+                    if (not ((totPseudoSteps,totPhiSteps) in repeatDict)) & (np.abs(pseudo+totPseudoSteps*4.8/nPseudoRap) < 2.4) & (np.abs(phi + totPhiSteps*2*np.pi/nPhi) <= np.pi):
                         #Add the box to the list of boxes we have already seen
                         repeatDict[(totPseudoSteps, totPhiSteps)]=True
                         #Calculate the nearest possible R
