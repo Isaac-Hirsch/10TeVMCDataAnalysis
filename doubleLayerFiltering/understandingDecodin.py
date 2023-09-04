@@ -74,15 +74,8 @@ for f in fnames:
     for event in reader:
 
         #Looking at the only doublet layer in the vertex barrel
-        tracksCollection = event.getCollection("VETrackerHits")
-        #creating a decoder that will be used layer to trace a hit back to its system and layer
-        encoding=tracksCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
-        decoder=UTIL.BitField64(encoding)
-        for hit in tracksCollection:
-            pseudo=hit.getPositionVec().PseudoRapidity()
-            if pseudo > maxPseudo:
-                maxPseudo=pseudo
-            elif pseudo < minPseudo:
-                minPseudo=pseudo
-print("min pseudo:" + str(minPseudo))
-print("max pseudo:" + str(maxPseudo))
+        particles = event.getCollection("MCParticle")
+        physics = event.getCollection("MCPhysicsParticles")
+
+        print("Particle:" + dir(particles))
+        print("Physics:" + dir(physics))
