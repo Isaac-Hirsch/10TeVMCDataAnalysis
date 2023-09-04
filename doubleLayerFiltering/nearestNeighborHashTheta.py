@@ -14,17 +14,17 @@ parser.add_option('-o', '--outFile', help='--outFile nearestPairBIB',
 #Gather all the files you want to run over.
 #Comment out all but 1 fnames
 #BIB
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2000.slcio")
+#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2000.slcio")
 #0-50 pt muons
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
 #250-1000 pt muons
 #fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_*.slcio")
 
 #Setting number of bins for the sorting function
 #Pseudorapditity spans -2.4 to 2.4
 nPseudoRap=100
-startPseudo=-0.17
-endPseudo=0.17
+startPseudo=0.17
+endPseudo=2.97
 #Phi spans -pi to pi
 nPhi=100
 startPhi=-np.pi
@@ -163,6 +163,8 @@ deltaPhi=[]
 deltaR=[]
 #nHoles stores a 0 if there is a hit (or hits) on both sides of a doublet layer, 1 if theres a hit on only 1 side of the doublet layer, and 2 if there are hits on both
 nHoles=[]
+#momentum has one index per event, stores 0 if the particle has decayed, and the truth particles momentum if it has not decayed
+momentum=[]
 
 #Loop over every file
 for f in fnames:
@@ -181,6 +183,21 @@ for f in fnames:
             deltaPhi[-1].append([])
             deltaR[-1].append([])
             nHoles[-1].append(0)
+            momentum.append(0)
+
+
+
+
+
+        #Find out if the particle has decayed and if not, what is its pt
+        #Collecting all the MCParticles
+        MCParticles = [particle for particle in event.getCollection("MCParticle")]
+        if (len(MCParticles)==1) and (MCParticles[0].getGeneratorStatus()==1):
+            momentum[-1]=MCParticles[0].getMomentumVec().Pt()
+
+
+
+
 
         #The below code searches over the vertex barrel
 
@@ -306,7 +323,8 @@ output={
     "deltaPesudorapdity" : deltaPseudo,
     "deltaPhi" : deltaPhi,
     "deltaR" : deltaR,
-    "nHoles" : nHoles
+    "nHoles" : nHoles,
+    "momentum" : momentum
 }
 
 output_json = options.outFile+".json"
