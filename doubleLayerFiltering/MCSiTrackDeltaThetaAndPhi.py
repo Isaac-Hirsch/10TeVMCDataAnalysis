@@ -22,6 +22,7 @@ fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muon
 
 deltaPhi=[]
 deltaTheta=[]
+deltaPseudo=[]
 totalHits=[]
 
 #Loop over every file
@@ -44,10 +45,12 @@ for f in fnames:
 
             phi=[]
             theta=[]
+            pseudo=[]
             numHits=[]
             for i in range(9):
                 phi.append(0)
                 theta.append(0)
+                pseudo.append(0)
                 numHits.append(0)
             
 
@@ -68,10 +71,12 @@ for f in fnames:
                     position=hit.getPositionVec()
                     phi[index]+=((-1)**(layer%2))*position.Phi()
                     theta[index]+=((-1)**(layer%2))*position.Theta()
+                    pseudo[index]+=((-1)**(layer%2))*position.PseudoRapidity()
                     numHits[index]+=1
             #Appending the particle data to the list
             deltaPhi.append(phi)
             deltaTheta.append(theta)
+            deltaPseudo.append(pseudo)
             totalHits.append(numHits)
 
 #Wrapping data into a dictionary that will be exported as a json
