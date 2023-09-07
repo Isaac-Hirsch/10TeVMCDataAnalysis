@@ -7,14 +7,14 @@ from pyLCIO import IOIMPL, EVENT, UTIL
 parser = OptionParser()
 parser.add_option('-i', '--inFile', help='--inFile Output_REC.slcio',
                   type=str, default='Output_REC.slcio')
-parser.add_option('-o', '--outFile', help='--outFile MCSiBIB',
-                  type=str, default='MCSiBIB')
+parser.add_option('-o', '--outFile', help='--outFile MCSi0NoBIB',
+                  type=str, default='MCSi0NoBIB')
 (options, args) = parser.parse_args()
 
 #BIB
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_*.slcio")
+#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_*.slcio")
 #0-50 GeV Muons
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_*.slcio")
 #50-250 GeV Muons
 #fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_50_250/muonGun_pT_50_250_reco_*.slcio")
 #250-1000 GeV Muons
