@@ -18,7 +18,7 @@ fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muon
 #50-250 GeV Muons
 #fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_50_250/muonGun_pT_50_250_reco_*.slcio")
 #250-1000 GeV Muons
-#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_10050/muonGun_pT_250_1000_reco_*.slcio")
+#fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_250_1000/muonGun_pT_250_1000_reco_*.slcio")
 
 deltaPhi=[]
 deltaTheta=[]
@@ -54,10 +54,11 @@ for f in fnames:
             for hit in track.getTrackerHits():
                 #Decoder
                 cellID = int(hit.getCellID0())
-                if (decoder['system'].value()==2 | (decoder['system'].value()==1 & decoder['layer'].value()<3)): #Requiring this be in the vertex layers
-                    #Getting info on detector of hit
-                    decoder.setValue(cellID)
-                    layer = decoder['layer'].value()
+                #Getting info on detector of hit
+                system=decoder['system'].value()
+                decoder.setValue(cellID)
+                layer = decoder['layer'].value()
+                if (system==2 | (system==1 & decoder['layer'].value()<3)): #Requiring this be in the vertex layers
                     side = decoder['side'].value()
 
                     #Index 0 is the barrel doublet, 1-4 are the -z endcaps from innermost to outer most and 5-6 are the +z endcaps also starting with innermost
