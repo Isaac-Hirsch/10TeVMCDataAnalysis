@@ -21,6 +21,11 @@ for f in fnames:
     #Loop over events in the file
     for event in reader:
         tracksCollection = event.getCollection("MCParticle_SiTracks_Refitted")
+        print("Collection:")
         print(dir(tracksCollection))
         for track in tracksCollection:
+            print("Track:")
             print(dir(track))
+            for hit in track:
+                print("Hit")
+                print(dir(hit))
