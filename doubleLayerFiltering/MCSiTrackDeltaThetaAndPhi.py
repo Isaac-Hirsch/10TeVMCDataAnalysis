@@ -57,7 +57,7 @@ for f in fnames:
                     index=(1+layer//2)*(side!=0)+4*(side==1)
                     
                     #Getting hit info
-                    position=hit.getgetPositionVec()
+                    position=hit.getPositionVec()
                     phi[index]=((-1)**(layer%2))*position.Phi()
                     theta[index]=((-1)**(layer%2))*position.Theta()
                     numHits[index]+=1
