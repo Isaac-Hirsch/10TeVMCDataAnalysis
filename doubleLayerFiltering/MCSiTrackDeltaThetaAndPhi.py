@@ -54,7 +54,7 @@ for f in fnames:
             for hit in track.getTrackerHits():
                 #Decoder
                 cellID = int(hit.getCellID0())
-                if (decoder['system'].value()<3): #Requiring this be in the vertex layers
+                if (decoder['system'].value()==2 | (decoder['system'].value()==1 & decoder['layer'].value()<3)): #Requiring this be in the vertex layers
                     #Getting info on detector of hit
                     decoder.setValue(cellID)
                     layer = decoder['layer'].value()
