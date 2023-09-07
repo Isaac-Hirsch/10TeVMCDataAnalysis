@@ -24,10 +24,13 @@ for f in fnames:
 
     #Loop over events in the file
     for event in reader:
+        #Getting the collection of SiTracks_Refitted that came from the McParticle(s)
         particlesCollection = event.getCollection("MCParticle_SiTracks_Refitted")
+        #Used for decoding
+        hitsCollection = event.getCollection("VBTrackerHits")
 
         #creating a decoder that will be used layer to trace a hit back to its system and layer
-        encoding=particlesCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
+        encoding=hitsCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder=UTIL.BitField64(encoding)
         for particle in particlesCollection:
             track=particle.getTo()
