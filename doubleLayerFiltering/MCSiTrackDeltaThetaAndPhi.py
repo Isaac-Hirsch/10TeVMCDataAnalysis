@@ -55,10 +55,10 @@ for f in fnames:
                 #Decoder
                 cellID = int(hit.getCellID0())
                 #Getting info on detector of hit
-                system=decoder['system'].value()
                 decoder.setValue(cellID)
+                system=decoder['system'].value()
                 layer = decoder['layer'].value()
-                if (system==2 | ((system==1) & (layer<2))): #Requiring this be in the vertex layers
+                if ((system==2) | ((system==1) & (layer<2))): #Requiring this be in the vertex layers
                     side = decoder['side'].value()
 
                     #Index 0 is the barrel doublet, 1-4 are the -z endcaps from innermost to outer most and 5-6 are the +z endcaps also starting with innermost
