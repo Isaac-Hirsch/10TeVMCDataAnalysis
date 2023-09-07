@@ -65,8 +65,8 @@ for f in fnames:
                     
                     #Getting hit info
                     position=hit.getPositionVec()
-                    phi[index]=((-1)**(layer%2))*position.Phi()
-                    theta[index]=((-1)**(layer%2))*position.Theta()
+                    phi[index]+=((-1)**(layer%2))*position.Phi()
+                    theta[index]+=((-1)**(layer%2))*position.Theta()
                     numHits[index]+=1
             #Appending the particle data to the list
             deltaPhi.append(phi)
