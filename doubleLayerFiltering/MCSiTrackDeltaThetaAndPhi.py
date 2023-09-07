@@ -30,7 +30,7 @@ for f in fnames:
         encoding=particlesCollection.getParameters().getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder=UTIL.BitField64(encoding)
         for particle in particlesCollection:
-            track=particle.getFrom()
+            track=particle.getTo()
 
             phi=[]
             theta=[]
