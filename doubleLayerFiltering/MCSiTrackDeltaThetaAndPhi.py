@@ -83,6 +83,7 @@ for f in fnames:
 output={
     "deltaPhi" : deltaPhi,
     "deltaTheta" : deltaTheta,
+    "deltaPseudoRapidity" : deltaPseudo,
     "totalHits" : totalHits
 }
 
