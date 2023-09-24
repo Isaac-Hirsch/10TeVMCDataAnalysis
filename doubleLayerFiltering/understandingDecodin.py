@@ -78,9 +78,17 @@ for f in fnames:
         ).getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
 
-        relationCollection=event.getCollection('VBTrackerHitsRelations ')
+        relationCollection=event.getCollection('VBTrackerHitsRelations')
         relation = UTIL.LCRelationNavigator(relationCollection)
 
         for hit in vertexHitsCollection:
-            has_rel = relation.getRelatedToObjects(hit)
-            print(dir(has_rel))
+            particle = relation.getRelatedToObjects(hit)[0]
+            mcp=particle.getMCParticle()
+            pdg=mcp.getPDG()
+            sim=mcp.getSimulatorStatus()
+            gen=mcp.getGeneratorStatus()
+            decay=mcp.isCreatedInSimulation() 
+            print(f"Pdg: {pdg}")
+            print(f"Sim: {sim}")
+            print(f"Gen: {gen}")
+            print(f"Decay: {decay}")
