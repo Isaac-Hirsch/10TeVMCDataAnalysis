@@ -73,12 +73,12 @@ for f in fnames:
 
     for event in reader:
 
-        vertexHitsCollection = event.getCollection('VXDTrackerHits')
+        vertexHitsCollection = event.getCollection('VBTrackerHits')
         encoding = vertexHitsCollection.getParameters(
         ).getStringVal(EVENT.LCIO.CellIDEncoding)
         decoder = UTIL.BitField64(encoding)
 
-        relationCollection=event.getCollection('VXDTrackerHitRelations')
+        relationCollection=event.getCollection('VBTrackerHitsRelations ')
         relation = UTIL.LCRelationNavigator(relationCollection)
 
         for hit in vertexHitsCollection:
