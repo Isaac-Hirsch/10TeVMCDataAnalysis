@@ -17,7 +17,7 @@ parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.roo
 
 tree = TTree("tracks_tree", "tracks_tree")
 
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/recoBIB/photonGun_pT_0_50/photonGun_pT_0_50_reco_2[12]00.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_2000.slcio")
 
 collections=[
     "AllTracks",
@@ -73,9 +73,14 @@ for f in fnames:
 
     for event in reader:
 
-        #Looking at the only doublet layer in the vertex barrel
-        particles = event.getCollection("MCParticle")
-        physics = event.getCollection("MCPhysicsParticles")
+        vertexHitsCollection = event.getCollection('VXDTrackerHits')
+        encoding = vertexHitsCollection.getParameters(
+        ).getStringVal(EVENT.LCIO.CellIDEncoding)
+        decoder = UTIL.BitField64(encoding)
 
-        print("Particle:" + dir(particles))
-        print("Physics:" + dir(physics))
+        relationCollection=event.getCollection('VXDTrackerHitRelations')
+        relation = UTIL.LCRelationNavigator(relationCollection)
+
+        for hit in vertexHitsCollection:
+            has_rel = relation.getRelatedToObjects(hit)
+            print(dir(has_rel))
