@@ -86,8 +86,8 @@ for f in fnames:
             particle = relation.getRelatedToObjects(hit)[0]
             print(f"From objects: {relation.getRelatedFromObjects(hit)}")
             print(f"To objects: {relation.getRelatedToObjects(hit)}")
-            print(f"From types: {relation.getFromType(hit)}")
-            print(f"To types: {relation.getToType(hit)}")
+            print(f"From weights: {relation.getRelatedFromWeights(hit)}")
+            print(f"To weights: {relation.getRelatedToWeights(hit)}")
             mcp=particle.getMCParticle()
             pdg=mcp.getPDG()
             sim=mcp.getSimulatorStatus()
