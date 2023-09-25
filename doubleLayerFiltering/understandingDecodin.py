@@ -85,6 +85,9 @@ for f in fnames:
         for hit in vertexHitsCollection:
             particle = relation.getRelatedToObjects(hit)[0]
             print(f"From objects: {relation.getRelatedFromObjects(hit)}")
+            print(f"To objects: {relation.getRelatedToObjects(hit)}")
+            print(f"From types: {relation.getRelatedFromType(hit)}")
+            print(f"To types: {relation.getRelatedToType(hit)}")
             mcp=particle.getMCParticle()
             pdg=mcp.getPDG()
             sim=mcp.getSimulatorStatus()
