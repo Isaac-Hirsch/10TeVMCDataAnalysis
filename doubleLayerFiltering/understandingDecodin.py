@@ -67,6 +67,7 @@ collections=[
 
 maxPseudo=0
 minPseudo=0
+i=0
 for f in fnames:
     reader = IOIMPL.LCFactory.getInstance().createLCReader()
     reader.open(f)
@@ -83,6 +84,7 @@ for f in fnames:
 
         for hit in vertexHitsCollection:
             particle = relation.getRelatedToObjects(hit)[0]
+            print(f"From objects: {relation.getRelatedFromObjects(hit)}")
             mcp=particle.getMCParticle()
             pdg=mcp.getPDG()
             sim=mcp.getSimulatorStatus()
