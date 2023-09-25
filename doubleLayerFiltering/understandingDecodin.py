@@ -101,5 +101,5 @@ for f in fnames:
             print(f"Gen: {gen}")
             print(f"Decay: {decay}")
             print(f"Overlay: {overlay}")
-            print(f"Vertex Z: {vertex.GetXYZ()}")
+            print(f"Vertex Z: {vertex.Z()}")
             print("")
