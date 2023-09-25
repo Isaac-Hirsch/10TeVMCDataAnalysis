@@ -17,7 +17,7 @@ parser.add_option('-o', '--outFile', help='--outFile ntup_hits_SiTracksNOBIB.roo
 
 tree = TTree("tracks_tree", "tracks_tree")
 
-fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_2000.slcio")
+fnames = glob.glob("/data/fmeloni/DataMuC_MuColl10_v0A/reco/muonGun_pT_0_50/muonGun_pT_0_50_reco_2?00.slcio")
 
 collections=[
     "AllTracks",
