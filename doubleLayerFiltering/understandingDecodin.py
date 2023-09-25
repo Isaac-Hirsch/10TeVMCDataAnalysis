@@ -101,6 +101,5 @@ for f in fnames:
             print(f"Gen: {gen}")
             print(f"Decay: {decay}")
             print(f"Overlay: {overlay}")
-            print(f"Vertex Z: {vertex.Z}")
-            print(f"Vertex R: {vertex.R}")
+            print(f"Vertex Z: {dir(vertex)}")
             print("")
