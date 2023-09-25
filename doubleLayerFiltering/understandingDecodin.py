@@ -102,4 +102,5 @@ for f in fnames:
             print(f"Decay: {decay}")
             print(f"Overlay: {overlay}")
             print(f"Vertex Z: {vertex.Z()}")
+            print(f"Vertex Z: {(vertex.X()**2+vertex.Y()**2)**(1/2)}")
             print("")
