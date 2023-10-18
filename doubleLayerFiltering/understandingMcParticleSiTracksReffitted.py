@@ -26,6 +26,9 @@ for f in fnames:
     for event in reader:
         MCPSiRe = event.getCollection('MCParticle_SiTracks_Refitted')
         for i in MCPSiRe:
-            print(dir(i))
+            print("Get From")
+            print(dir(i.getFrom()))
+            print("Get to")
+            print(dir(i.getTo()))
         
     
