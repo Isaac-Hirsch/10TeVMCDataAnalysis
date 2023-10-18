@@ -27,5 +27,5 @@ for f in fnames:
         MCPSiRe = event.getCollection('MCParticle_SiTracks_Refitted')
         for i in MCPSiRe:
             print(dir(i))
-        break
-    break
+        
+    
